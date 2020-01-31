@@ -29,7 +29,15 @@ serde = { version = "1", features = ["derive"] }
 
 [dependencies.oxygengine]
 version = "0.6"
-features = ["web-composite-game"]
+features = [
+  "web",
+  "composite-renderer",
+  "input",
+  "audio",
+  "oxygengine-composite-renderer-backend-web",
+  "oxygengine-input-device-web",
+  "oxygengine-audio-backend-web"
+]
 
 [dependencies.web-sys]
 version = "0.3.22"

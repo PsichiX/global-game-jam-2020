@@ -1,7 +1,8 @@
-template_name: instance
+template_name: airplane
 entities:
   - Data:
       components:
+        Airplane: {}
         CompositeRenderable:
           Image:
             image: logo.png

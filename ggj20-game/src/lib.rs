@@ -1,7 +1,12 @@
+#[macro_use]
+extern crate oxygengine;
+
 use crate::{
-    components::{speed::Speed, KeyboardMovementTag},
+    components::{airplane::Airplane, city::City, infection_rate::InfectionRate},
+    resources::{wave::Wave},
+    systems::{wave::WaveSystem},
     states::loading::LoadingState,
-    systems::keyboard_movement::KeyboardMovementSystem,
+    // systems::keyboard_movement::KeyboardMovementSystem,
 };
 use oxygengine::prelude::*;
 use wasm_bindgen::prelude::*;
@@ -9,6 +14,7 @@ use wasm_bindgen::prelude::*;
 mod components;
 mod states;
 mod systems;
+mod resources;
 
 #[cfg(feature = "wee_alloc")]
 #[global_allocator]
@@ -44,13 +50,10 @@ pub fn main_js() -> Result<(), JsValue> {
             oxygengine::composite_renderer::prefabs_installer(prefabs);
             // install audio prefabs.
             oxygengine::audio::prefabs_installer(prefabs);
-            // install 2d physics prefabs.
-            oxygengine::physics_2d::prefabs_installer(prefabs);
-            // install prefabs for integration between 2D physics and composite rendering.
-            oxygengine::integration_physics_2d_composite_renderer::prefabs_installer(prefabs);
             // register game prefabs component factories.
-            prefabs.register_component_factory::<Speed>("Speed");
-            prefabs.register_component_factory::<KeyboardMovementTag>("KeyboardMovementTag");
+            prefabs.register_component_factory::<Airplane>("Airplane");
+            prefabs.register_component_factory::<City>("City");
+            prefabs.register_component_factory::<InfectionRate>("InfectionRate");
         })
         // install input managment.
         .with_bundle(oxygengine::input::bundle_installer, |input| {
@@ -76,20 +79,12 @@ pub fn main_js() -> Result<(), JsValue> {
         )
         // install audio support.
         .with_bundle(oxygengine::audio::bundle_installer, WebAudio::default())
-        // install 2D physics with default gravity force vector.
-        .with_bundle(
-            oxygengine::physics_2d::bundle_installer,
-            (
-                Vector::y() * 9.81,
-                Physics2dWorldSimulationMode::FixedTimestepMaxIterations(3),
-            ),
-        )
-        // install integration between 2D physics and composite rendering.
-        .with_bundle(
-            oxygengine::integration_physics_2d_composite_renderer::bundle_installer,
-            (),
-        )
-        .with_system(KeyboardMovementSystem, "keyboard_movement", &[])
+        // .with_system(KeyboardMovementSystem, "keyboard_movement", &[])
+        .with_component::<Airplane>()
+        .with_component::<City>()
+        .with_component::<InfectionRate>()
+        .with_resource(Wave::new(20, 1.0))
+        .with_system(WaveSystem::default(), "wave", &[])
         .build(LoadingState::default(), WebAppTimer::default());
 
     // Application run phase - spawn runner that ticks our app.
