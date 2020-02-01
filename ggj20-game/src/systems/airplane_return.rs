@@ -1,13 +1,8 @@
 #![allow(clippy::type_complexity)]
 
-use crate::resources::{
-    wave::Wave
-};
+use crate::resources::wave::Wave;
 
-use crate::components::{
-    airplane::Airplane,
-    letter::Letter
-};
+use crate::components::{airplane::Airplane, letter::Letter};
 
 use oxygengine::prelude::*;
 
@@ -37,7 +32,10 @@ impl<'s> System<'s> for AirplaneReturnSystem {
                 continue;
             }
 
-            for (airplane, letter) in (&mut airplanes, &mut letters).join().filter(|(airplane, _)| { !airplane.returning }) {
+            for (airplane, letter) in (&mut airplanes, &mut letters)
+                .join()
+                .filter(|(airplane, _)| !airplane.returning)
+            {
                 if letter.letter == c {
                     letter.letter = 0;
                     airplane.reverse();

@@ -1,12 +1,7 @@
 #![allow(clippy::type_complexity)]
 
 use crate::{
-    components::{
-        airplane::Airplane, 
-        city::City, 
-        infection_rate::InfectionRate,
-        letter::Letter
-    },
+    components::{airplane::Airplane, city::City, infection_rate::InfectionRate, letter::Letter},
     resources::wave::Wave,
     utils::tween::*,
 };
@@ -50,12 +45,11 @@ impl<'s> System<'s> for WaveSystem {
 
             self.city += 1;
 
-            let cities = (&entities, &cities, &transforms).join()
-                .filter(|(_, city, _)| { 
-                    match city.levels_range {
-                        Some(r) => waves.current_level >= r.0 && waves.current_level <= r.1,
-                        None => false
-                    }
+            let cities = (&entities, &cities, &transforms)
+                .join()
+                .filter(|(_, city, _)| match city.levels_range {
+                    Some(r) => waves.current_level >= r.0 && waves.current_level <= r.1,
+                    None => false,
                 })
                 .collect::<Vec<_>>();
 
@@ -73,7 +67,11 @@ impl<'s> System<'s> for WaveSystem {
                 let letter_index = (i + waves.current_start_letter) % waves.available_letters;
                 let c = crate::resources::wave::LETTERS[letter_index];
 
-                if *waves.airplane_letters.get(&c).expect("Letter was not found") {
+                if *waves
+                    .airplane_letters
+                    .get(&c)
+                    .expect("Letter was not found")
+                {
                     continue;
                 }
 
@@ -83,13 +81,15 @@ impl<'s> System<'s> for WaveSystem {
 
             let letter_ascii = match letter_ascii {
                 Some(c) => c,
-                None => { return; }
+                None => {
+                    return;
+                }
             };
 
             let letter = letter_ascii as char;
 
             waves.airplane_letters.insert(letter_ascii, true);
-            
+
             let airplane_entities = prefabs
                 .instantiate_direct(
                     "airplane",
@@ -106,9 +106,11 @@ impl<'s> System<'s> for WaveSystem {
             lazy_update.exec(move |world| {
                 {
                     let letter_storage = &mut world.write_storage::<Letter>();
-                    let letter_comp = letter_storage.get_mut(airplane_entity).expect("Cannot get the letter component for airplane");
+                    let letter_comp = letter_storage
+                        .get_mut(airplane_entity)
+                        .expect("Cannot get the letter component for airplane");
 
-                    letter_comp.letter = letter_ascii; 
+                    letter_comp.letter = letter_ascii;
                 }
 
                 let city_infection_rate = {
@@ -130,13 +132,12 @@ impl<'s> System<'s> for WaveSystem {
                 }
 
                 let infection_rate = {
-                    let infection_rate_storage = &mut world.write_storage::<InfectionRate>(); 
+                    let infection_rate_storage = &mut world.write_storage::<InfectionRate>();
                     let infection_rate = infection_rate_storage.get_mut(airplane_entity).expect("");
-                    
+
                     if city_index % 7 == 0 {
                         infection_rate.rate = 0;
-                    }
-                    else {
+                    } else {
                         infection_rate.rate = 10.max(city_infection_rate / 100);
                     }
 
@@ -144,15 +145,20 @@ impl<'s> System<'s> for WaveSystem {
                 };
 
                 {
-                    let composite_renderable_storage = &mut world.write_storage::<CompositeRenderable>();
-                    let renderable = composite_renderable_storage.get_mut(airplane_letter_entity).expect("Cannot get renderable from airplane letter entity");
+                    let composite_renderable_storage =
+                        &mut world.write_storage::<CompositeRenderable>();
+                    let renderable = composite_renderable_storage
+                        .get_mut(airplane_letter_entity)
+                        .expect("Cannot get renderable from airplane letter entity");
 
                     if let Renderable::Image(data) = &mut renderable.0 {
                         data.image = format!("images/letters/{}.png", letter.to_string()).into();
                     }
 
-                    let renderable = composite_renderable_storage.get_mut(airplane_entity).expect("Cannot get renderable from airplane entity");
-                    
+                    let renderable = composite_renderable_storage
+                        .get_mut(airplane_entity)
+                        .expect("Cannot get renderable from airplane entity");
+
                     if let Renderable::Image(data) = &mut renderable.0 {
                         if infection_rate != 0 {
                             data.image = "images/red_airplane.png".into();

@@ -38,7 +38,10 @@ impl State for GameState {
             let input = &world.read_resource::<InputController>();
             if input.trigger_or_default("key-a").is_pressed() {
                 world.write_resource::<Wave>().current_level += 1;
-                info!("=== ADD LEVEL: {}", world.read_resource::<Wave>().current_level);
+                info!(
+                    "=== ADD LEVEL: {}",
+                    world.read_resource::<Wave>().current_level
+                );
             } else {
                 if input.trigger_or_default("key-d").is_pressed() {
                     let wave = &mut world.write_resource::<Wave>();
