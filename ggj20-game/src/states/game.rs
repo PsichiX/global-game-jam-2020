@@ -17,18 +17,35 @@ impl Default for Command {
     }
 }
 
-#[derive(Debug, Default)]
+#[derive(Debug)]
 pub struct GameState {
-    camera: Option<Entity>,
+    music_name: String,
     command: Command,
+}
+
+impl GameState {
+    pub fn new(music_name: String) -> Self {
+        Self {
+            music_name,
+            command: Command::None,
+        }
+    }
 }
 
 impl State for GameState {
     fn on_enter(&mut self, world: &mut World) {
-        world
+        let camera_entity = *world
             .write_resource::<PrefabManager>()
             .instantiate_world("scene", world)
-            .expect("Could not instantiate scene");
+            .expect("Could not instantiate scene")
+            .get(0)
+            .expect("Could not get camera entity from scene instance");
+        let music_name = format!("audio://music/{}.ogg", self.music_name).into();
+
+        world.read_resource::<LazyUpdate>().exec_mut(move |world| {
+            *<AudioSource>::fetch(world, camera_entity) =
+                AudioSource::new_play(music_name, true, true);
+        });
 
         self.command = Command::PrepareData;
     }

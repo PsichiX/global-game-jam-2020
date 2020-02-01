@@ -2,7 +2,7 @@
 
 use crate::{
     components::{city::City, MainCameraTag},
-    resources::wave::Wave,
+    resources::{beat::Beat, wave::Wave},
 };
 use oxygengine::prelude::*;
 use std::collections::HashSet;
@@ -20,8 +20,14 @@ impl<'s> System<'s> for BeatSystem {
     fn run(&mut self, (mut beat, audio_sources, main_cameras): Self::SystemData) {
         if let Some((audio_source, _)) = (&audio_sources, &main_cameras).join().next() {
             if let Some(current_time) = audio_source.current_time() {
-                beat.current_time_seconds = current_time;
+                beat.process(current_time.into());
             }
+        }
+
+        // TODO: remove
+        if beat.is_sync_with_beat(0.1)
+        {
+            info!("=== BEAT: {}", beat.current_time_seconds());
         }
     }
 }

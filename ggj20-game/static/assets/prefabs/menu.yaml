@@ -1,0 +1,50 @@
+template_name: scene
+entities:
+  - Data:
+      components:
+        Name: camera
+        MainCameraTag: ~
+        CompositeCamera:
+          scaling: CenterAspect
+        CompositeTransform:
+          scale:
+            x: 720
+            y: 720
+        AudioSource:
+          audio: fearless-first.ogg
+          streaming: true
+        NonPersistent: ~
+  - Data:
+      components:
+        CompositeRenderable:
+          Rectangle:
+            color:
+              r: 125
+              g: 200
+              b: 0
+              a: 255
+            rect:
+              x: -2000
+              y: -2000
+              w: 4000
+              h: 4000
+        CompositeTransform: {}
+        NonPersistent: ~
+  - Data:
+      components:
+        MenuTrackSelectedTag: ~
+        CompositeRenderable:
+          Text:
+            font: Verdana
+            text: <SELECTED_TRACK>
+            color:
+              r: 255
+              g: 255
+              b: 255
+              a: 255
+            align: Center
+            text_base: Middle
+            size: 64
+        CompositeTransform: {}
+        CompositeRenderDepth: 1
+        NonPersistent: ~

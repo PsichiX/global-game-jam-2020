@@ -3,7 +3,10 @@ extern crate oxygengine;
 
 use crate::{
     assets::tiled_map_asset_protocol::TiledMapAssetProtocol,
-    components::{airplane::Airplane, city::City, infection_rate::InfectionRate, MainCameraTag},
+    components::{
+        airplane::Airplane, city::City, infection_rate::InfectionRate, MainCameraTag,
+        MenuTrackSelectedTag,
+    },
     resources::wave::Wave,
     states::loading::LoadingState,
     // systems::keyboard_movement::KeyboardMovementSystem,
@@ -62,6 +65,7 @@ pub fn main_js() -> Result<(), JsValue> {
             prefabs.register_component_factory::<City>("City");
             prefabs.register_component_factory::<InfectionRate>("InfectionRate");
             prefabs.register_component_factory::<MainCameraTag>("MainCameraTag");
+            prefabs.register_component_factory::<MenuTrackSelectedTag>("MenuTrackSelectedTag");
         })
         // install input managment.
         .with_bundle(oxygengine::input::bundle_installer, |input| {
