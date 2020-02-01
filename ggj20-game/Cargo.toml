@@ -26,6 +26,7 @@ wasm-bindgen = "0.2.45"
 # allocator, so it's not enabled by default.
 wee_alloc = { version = "0.4.5", optional = true }
 serde = { version = "1", features = ["derive"] }
+easer = "0.2"
 
 [dependencies.oxygengine]
 version = "0.6"

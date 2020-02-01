@@ -6,6 +6,7 @@ pub struct Wave {
     pub airplanes_count: i32,
     pub airplane_interval: f64,
     pub airplane_letters: HashMap<u8, Option<Entity>>,
+    pub is_paused: bool
 }
 
 impl Wave {
@@ -13,7 +14,8 @@ impl Wave {
         let mut wave = Self {
             airplanes_count,
             airplane_interval,
-            airplane_letters: HashMap::new()
+            airplane_letters: HashMap::new(),
+            is_paused: false
         };
 
         for c in (' ' as u8)..('~' as u8) {

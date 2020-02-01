@@ -3,6 +3,7 @@
 use crate::{
     components::{city::City, airplane::Airplane},
     resources::{wave::Wave},
+    utils::{tween::*}
 };
 
 use oxygengine::prelude::*;
@@ -22,7 +23,11 @@ impl<'s> System<'s> for WaveSystem {
         (Entities<'s>, Read<'s, LazyUpdate>, ReadExpect<'s, AppLifeCycle>),
     );
 
-    fn run(&mut self, (mut waves, mut prefabs, cities, mut transforms, (entities, lazy_update, lifecycle)): Self::SystemData) {
+    fn run(&mut self, (waves, mut prefabs, cities, transforms, (entities, lazy_update, lifecycle)): Self::SystemData) {
+        if waves.is_paused {
+            return;
+        }
+
         let sec =  lifecycle.delta_time_seconds();
 
         if sec > 1.0 {
@@ -53,6 +58,8 @@ impl<'s> System<'s> for WaveSystem {
                 airplane.start_pos = city_start.get_translation();
                 airplane.end_pos = city_end.get_translation();
                 airplane.phase = 0.0;
+                airplane.tween = Some(Tween::new(TweenType::Linear, EaseType::Out));
+                airplane.speed = 0.2;
                 transform.set_translation(city_start.get_translation());
             })
         }

@@ -1,10 +1,14 @@
-#[macro_use]
-extern crate oxygengine;
+// #[macro_use]
+// extern crate oxygengine;
 
 use crate::{
     components::{airplane::Airplane, city::City, infection_rate::InfectionRate},
     resources::{wave::Wave},
-    systems::{wave::WaveSystem},
+    systems::{
+        wave::WaveSystem,
+        airplane_move::AirplaneMoveSystem,
+        airplane_land::AirplaneLandSystem
+    },
     states::loading::LoadingState,
     // systems::keyboard_movement::KeyboardMovementSystem,
 };
@@ -15,6 +19,7 @@ mod components;
 mod states;
 mod systems;
 mod resources;
+mod utils;
 
 #[cfg(feature = "wee_alloc")]
 #[global_allocator]
@@ -85,6 +90,8 @@ pub fn main_js() -> Result<(), JsValue> {
         .with_component::<InfectionRate>()
         .with_resource(Wave::new(20, 1.0))
         .with_system(WaveSystem::default(), "wave", &[])
+        .with_system(AirplaneMoveSystem::default(), "airplane_move", &[])
+        .with_system(AirplaneLandSystem::default(), "airplane_land", &[])
         .build(LoadingState::default(), WebAppTimer::default());
 
     // Application run phase - spawn runner that ticks our app.
