@@ -3,6 +3,7 @@ entities:
   - Data:
       components:
         Airplane: {}
+        InfectionRate: {}
         CompositeRenderable:
           Image:
             image: images/white_airplane.png

@@ -1,6 +1,7 @@
 template_name: city
 entities:
   - Data:
+      uid: city
       components:
         City: {}
         InfectionRate: {}
@@ -14,4 +15,21 @@ entities:
           scale:
             x: 0.1
             y: 0.1
+        NonPersistent: ~
+  - Data: 
+      components:
+        Name: infection_rate_display
+        Parent: city
+        CompositeRenderable: 
+          Path:
+            color: 
+              r: 0
+              g: 255
+              b: 0
+              a: 255
+            elements:  
+              - MoveTo:
+                  x: 0
+                  y: 0
+        CompositeTransform: {}
         NonPersistent: ~

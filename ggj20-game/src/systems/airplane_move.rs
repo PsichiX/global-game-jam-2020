@@ -20,6 +20,7 @@ impl<'s> System<'s> for AirplaneMoveSystem {
         for (mut airplane, transform) in (&mut airplanes, &mut transforms).join() {
             if let Some(tween) = airplane.tween {
                 airplane.phase = (airplane.phase + delta * airplane.speed).min(1.0);
+
                 transform.set_translation(
                     airplane
                         .start_pos

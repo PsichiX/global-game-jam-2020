@@ -16,6 +16,8 @@ pub struct Airplane {
     pub speed: f32,
     #[serde(default)]
     pub returning: bool,
+    #[serde(skip)]
+    pub destination_city: Option<Entity>
 }
 
 impl Component for Airplane {
