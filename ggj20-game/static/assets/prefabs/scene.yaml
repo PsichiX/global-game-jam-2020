@@ -12,6 +12,10 @@ entities:
           scale:
             x: 1000
             y: 1000
+        AudioSource:
+          audio: ""
+          streaming: true
+          play: true
         NonPersistent: ~
   - Data:
       components:
