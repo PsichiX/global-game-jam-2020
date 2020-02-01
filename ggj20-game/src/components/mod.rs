@@ -15,3 +15,13 @@ impl Component for MainCameraTag {
 
 impl Prefab for MainCameraTag {}
 impl PrefabComponent for MainCameraTag {}
+
+#[derive(Debug, Default, Copy, Clone, Serialize, Deserialize)]
+pub struct MenuTrackSelectedTag;
+
+impl Component for MenuTrackSelectedTag {
+    type Storage = VecStorage<Self>;
+}
+
+impl Prefab for MenuTrackSelectedTag {}
+impl PrefabComponent for MenuTrackSelectedTag {}

@@ -1,8 +1,7 @@
 #![allow(clippy::type_complexity)]
 
 use crate::resources::wave::Wave;
-
-use crate::components::{airplane::Airplane, letter::Letter};
+use crate::components::{airplane::Airplane, letter::Letter, MainCameraTag};
 
 use oxygengine::prelude::*;
 

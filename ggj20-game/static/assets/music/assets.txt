@@ -1,0 +1,8 @@
+audio://music/blank.ogg
+yaml://music/blank.yaml
+audio://music/fearless.ogg
+yaml://music/fearless.yaml
+audio://music/surf-shimmy.ogg
+yaml://music/surf-shimmy.yaml
+audio://music/werq.ogg
+yaml://music/werq.yaml
