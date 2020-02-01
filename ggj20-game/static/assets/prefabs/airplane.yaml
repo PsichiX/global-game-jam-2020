@@ -1,0 +1,16 @@
+template_name: airplane
+entities:
+  - Data:
+      components:
+        Airplane: {}
+        CompositeRenderable:
+          Image:
+            image: images/white_airplane.png
+            alignment:
+              x: 0.5
+              y: 0.5
+        CompositeTransform:
+          scale:
+            x: 0.1
+            y: 0.1
+        NonPersistent: ~

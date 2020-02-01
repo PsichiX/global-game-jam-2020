@@ -1,21 +1,21 @@
-// #[macro_use]
-// extern crate oxygengine;
+#[macro_use]
+extern crate oxygengine;
 
 use crate::{
-    components::{airplane::Airplane, city::City, infection_rate::InfectionRate},
-    resources::{wave::Wave},
-    systems::{
-        wave::WaveSystem,
-        view::ViewSystem,
-        airplane_move::AirplaneMoveSystem,
-        airplane_land::AirplaneLandSystem
-    },
+    assets::tiled_map_asset_protocol::TiledMapAssetProtocol,
+    components::{airplane::Airplane, city::City, infection_rate::InfectionRate, MainCameraTag},
+    resources::wave::Wave,
     states::loading::LoadingState,
     // systems::keyboard_movement::KeyboardMovementSystem,
+    systems::{
+        airplane_land::AirplaneLandSystem, airplane_move::AirplaneMoveSystem,
+        airplane_return::AirplaneReturnSystem, view::ViewSystem, wave::WaveSystem,
+    },
 };
 use oxygengine::prelude::*;
 use wasm_bindgen::prelude::*;
 
+mod assets;
 mod components;
 mod resources;
 mod states;
@@ -48,6 +48,7 @@ pub fn main_js() -> Result<(), JsValue> {
                 oxygengine::composite_renderer::protocols_installer(assets);
                 // register assets protocols from audio module.
                 oxygengine::audio::protocols_installer(assets);
+                assets.register(TiledMapAssetProtocol);
             }),
         )
         // install core module prefabs management.
@@ -60,6 +61,7 @@ pub fn main_js() -> Result<(), JsValue> {
             prefabs.register_component_factory::<Airplane>("Airplane");
             prefabs.register_component_factory::<City>("City");
             prefabs.register_component_factory::<InfectionRate>("InfectionRate");
+            prefabs.register_component_factory::<MainCameraTag>("MainCameraTag");
         })
         // install input managment.
         .with_bundle(oxygengine::input::bundle_installer, |input| {
@@ -91,9 +93,10 @@ pub fn main_js() -> Result<(), JsValue> {
         .with_component::<InfectionRate>()
         .with_resource(Wave::new(20, 1.0))
         .with_system(WaveSystem::default(), "wave", &[])
-        .with_system(AirplaneMoveSystem::default(), "airplane_move", &[])
+        .with_system(AirplaneReturnSystem::default(), "airplane_return", &[])
         .with_system(AirplaneLandSystem::default(), "airplane_land", &[])
-        .with_system(ViewSystem::default(), "view", &["wave"])
+        .with_system(AirplaneMoveSystem::default(), "airplane_move", &[])
+        .with_system(ViewSystem::default(), "view", &[])
         .build(LoadingState::default(), WebAppTimer::default());
 
     // Application run phase - spawn runner that ticks our app.

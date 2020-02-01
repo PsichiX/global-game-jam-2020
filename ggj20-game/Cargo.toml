@@ -27,6 +27,7 @@ wasm-bindgen = "0.2.45"
 wee_alloc = { version = "0.4.5", optional = true }
 serde = { version = "1", features = ["derive"] }
 easer = "0.2"
+serde_json = "1"
 
 [dependencies.oxygengine]
 version = "0.6"

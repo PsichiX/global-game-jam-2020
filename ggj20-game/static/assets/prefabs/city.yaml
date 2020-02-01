@@ -1,16 +1,18 @@
-template_name: airplane
+template_name: city
 entities:
   - Data:
       components:
         Airplane: {}
+        City: {}
+        InfectionRate: {}
         CompositeRenderable:
           Image:
-            image: logo.png
+            image: images/white_city.png
             alignment:
               x: 0.5
               y: 0.5
         CompositeTransform:
           scale:
-            x: 0.15
-            y: 0.15
+            x: 0.1
+            y: 0.1
         NonPersistent: ~

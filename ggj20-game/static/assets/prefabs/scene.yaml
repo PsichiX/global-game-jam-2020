@@ -1,0 +1,43 @@
+template_name: scene
+entities:
+  - Data:
+      components:
+        Name: camera
+        MainCameraTag: ~
+        CompositeCamera:
+          scaling: CenterAspect
+        CompositeTransform:
+          scale:
+            x: 1000
+            y: 1000
+        # AudioSource:
+        #   audio: ambient.ogg
+        #   streaming: true
+        #   play: true
+        NonPersistent: ~
+  - Data:
+      components:
+        CompositeRenderable:
+          Image:
+            image: images/world.png
+        CompositeTransform: {}
+        NonPersistent: ~
+  # - Data:
+  #     components:
+  #       CompositeRenderable:
+  #         Text:
+  #           font: Verdana
+  #           text: Use WSAD to move
+  #           color:
+  #             r: 255
+  #             g: 255
+  #             b: 255
+  #             a: 255
+  #           align: Center
+  #           size: 24
+  #       CompositeTransform:
+  #         translation:
+  #           x: 0
+  #           y: -100
+  #       CompositeRenderDepth: 1
+  #       NonPersistent: ~

@@ -1,0 +1,3 @@
+prefab://prefabs/scene.yaml
+prefab://prefabs/airplane.yaml
+prefab://prefabs/city.yaml

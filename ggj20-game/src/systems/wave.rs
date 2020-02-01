@@ -1,9 +1,9 @@
 #![allow(clippy::type_complexity)]
 
 use crate::{
-    components::{city::City, airplane::Airplane},
-    resources::{wave::Wave},
-    utils::{tween::*}
+    components::{airplane::Airplane, city::City},
+    resources::wave::Wave,
+    utils::tween::*,
 };
 use oxygengine::prelude::*;
 
@@ -24,12 +24,15 @@ impl<'s> System<'s> for WaveSystem {
         ReadStorage<'s, CompositeTransform>,
     );
 
-    fn run(&mut self, (entities, lazy_update, lifecycle, waves, mut prefabs, cities, transforms): Self::SystemData) {
+    fn run(
+        &mut self,
+        (entities, lazy_update, lifecycle, waves, mut prefabs, cities, transforms): Self::SystemData,
+    ) {
         if waves.is_paused {
             return;
         }
 
-        let sec =  lifecycle.delta_time_seconds();
+        let sec = lifecycle.delta_time_seconds();
 
         if sec > 1.0 {
             return;

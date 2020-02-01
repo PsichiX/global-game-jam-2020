@@ -1,6 +1,6 @@
+use crate::utils::tween::Tween;
 use oxygengine::prelude::*;
 use serde::{Deserialize, Serialize};
-use crate::utils::tween::Tween;
 
 #[derive(Debug, Clone, Default, Serialize, Deserialize)]
 pub struct Airplane {
@@ -13,11 +13,12 @@ pub struct Airplane {
     #[serde(default)]
     pub tween: Option<Tween>,
     #[serde(default)]
-    pub speed: f32
+    pub speed: f32,
+    #[serde(default)]
+    pub returning: bool,
 }
 
 impl Component for Airplane {
-    // not all entities has speed so we use `VecStorage`.
     type Storage = VecStorage<Self>;
 }
 
