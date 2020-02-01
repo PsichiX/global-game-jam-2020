@@ -19,7 +19,7 @@ impl<'s> System<'s> for AirplaneMoveSystem {
         let delta = lifecycle.delta_time_seconds() as f32;
 
         for (mut airplane, transform) in (&mut airplanes, &mut transforms).join() {
-            if let Some(tween) = airplane.tween {
+            if let Some(_tween) = airplane.tween {
                 airplane.phase = (airplane.phase + delta * airplane.speed).min(1.0);
 
                 let path = Tween::new(TweenType::Cubic, EaseType::InOut);

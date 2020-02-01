@@ -10,3 +10,4 @@ png://images/white_airplane.png
 png://images/white_city.png
 png://images/wirus.png
 png://images/world.png
+set://images/letters/assets.txt

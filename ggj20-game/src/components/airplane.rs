@@ -18,6 +18,8 @@ pub struct Airplane {
     pub returning: bool,
     #[serde(skip)]
     pub destination_city: Option<Entity>,
+    #[serde(skip)]
+    pub letter_display: Option<Entity>,
 }
 
 impl Component for Airplane {
