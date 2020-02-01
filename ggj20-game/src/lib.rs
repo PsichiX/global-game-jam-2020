@@ -12,7 +12,8 @@ use crate::{
     // systems::keyboard_movement::KeyboardMovementSystem,
     systems::{
         airplane_land::AirplaneLandSystem, airplane_move::AirplaneMoveSystem,
-        airplane_return::AirplaneReturnSystem, view::ViewSystem, wave::WaveSystem,
+        airplane_return::AirplaneReturnSystem, beat::BeatSystem, view::ViewSystem,
+        wave::WaveSystem,
     },
 };
 use oxygengine::prelude::*;
@@ -94,7 +95,6 @@ pub fn main_js() -> Result<(), JsValue> {
         )
         // install audio support.
         .with_bundle(oxygengine::audio::bundle_installer, WebAudio::default())
-        // .with_system(KeyboardMovementSystem, "keyboard_movement", &[])
         .with_component::<Airplane>()
         .with_component::<City>()
         .with_component::<InfectionRate>()
@@ -104,6 +104,7 @@ pub fn main_js() -> Result<(), JsValue> {
         .with_system(AirplaneLandSystem::default(), "airplane_land", &[])
         .with_system(AirplaneMoveSystem::default(), "airplane_move", &[])
         .with_system(ViewSystem::default(), "view", &[])
+        .with_system(BeatSystem::default(), "beat", &[])
         .build(LoadingState::default(), WebAppTimer::default());
 
     // Application run phase - spawn runner that ticks our app.
