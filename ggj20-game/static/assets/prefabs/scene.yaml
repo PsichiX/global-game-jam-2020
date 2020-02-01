@@ -6,17 +6,29 @@ entities:
         MainCameraTag: ~
         CompositeCamera:
           scaling: CenterAspect
+          tags:
+            - world
         CompositeTransform:
           scale:
             x: 1000
             y: 1000
-        AudioSource:
-          audio: ""
-          streaming: true
-          play: true
         NonPersistent: ~
   - Data:
       components:
+        Name: camera_ui
+        MainCameraTag: ~
+        CompositeCamera:
+          scaling: CenterAspect
+          tags:
+            - ui
+        CompositeTransform:
+          scale:
+            x: 1000
+            y: 1000
+        NonPersistent: ~
+  - Data:
+      components:
+        Tag: world
         CompositeRenderable:
           Image:
             image: images/world.png
@@ -24,6 +36,58 @@ entities:
         NonPersistent: ~
   - Data:
       components:
+        Tag: ui
+        CompositeRenderLayer: 1
+        CompositeCameraAlignment:
+          x: 0
+          y: 1
+        CompositeRenderable:
+          Image:
+            image: images/left_part_down_container.png
+            destination:
+              x: 0
+              y: -200
+              w: 200
+              h: 200
+        CompositeTransform: {}
+        NonPersistent: ~
+  - Data:
+      components:
+        Tag: ui
+        CompositeRenderLayer: 1
+        CompositeCameraAlignment:
+          x: 0.5
+          y: 1
+        CompositeRenderable:
+          Image:
+            image: images/middle_part_down_container.png
+            destination:
+              x: 0
+              y: -200
+              w: 500
+              h: 200
+        CompositeTransform: {}
+        NonPersistent: ~
+  - Data:
+      components:
+        Tag: ui
+        CompositeRenderLayer: 1
+        CompositeCameraAlignment:
+          x: 1
+          y: 1
+        CompositeRenderable:
+          Image:
+            image: images/right_part_down_container.png
+            destination:
+              x: 0
+              y: -200
+              w: 200
+              h: 200
+        CompositeTransform: {}
+        NonPersistent: ~
+  - Data:
+      components:
+        Tag: ui
         CompositeRenderLayer: 1
         CompositeCameraAlignment:
           x: 1
@@ -35,9 +99,9 @@ entities:
               x: -50
               y: -50
               w: 100
-              h: 100 
-        CompositeTransform: 
-          translation: 
+              h: 100
+        CompositeTransform:
+          translation:
             x: -75
             y: -250
         NonPersistent: ~

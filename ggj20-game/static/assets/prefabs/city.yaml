@@ -3,6 +3,7 @@ entities:
   - Data:
       uid: city
       components:
+        Tag: world
         City: {}
         InfectionRate: {}
         CompositeRenderable:
@@ -16,18 +17,19 @@ entities:
             x: 0.1
             y: 0.1
         NonPersistent: ~
-  - Data: 
+  - Data:
       components:
+        Tag: world
         Name: infection_rate_display
         Parent: city
-        CompositeRenderable: 
+        CompositeRenderable:
           Path:
-            color: 
+            color:
               r: 0
               g: 255
               b: 0
               a: 255
-            elements:  
+            elements:
               - MoveTo:
                   x: 0
                   y: 0

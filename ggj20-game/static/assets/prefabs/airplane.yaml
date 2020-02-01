@@ -1,8 +1,9 @@
 template_name: airplane
 entities:
   - Data:
-      uid: airplane 
+      uid: airplane
       components:
+        Tag: world
         Airplane: {}
         InfectionRate: {}
         Letter: {}
@@ -17,20 +18,21 @@ entities:
             x: 0.1
             y: 0.1
         NonPersistent: ~
-  - Data: 
-      components: 
+  - Data:
+      components:
         Name: airplane_letter
+        Tag: world
         Parent: airplane
         CompositeVisibility: true
         CompositeRenderable:
-          Image: 
+          Image:
             image: images/letters/a.png
-            destination: 
+            destination:
               x: -150
               y: 0
               w: 300
               h: 300
-        CompositeTransform: 
+        CompositeTransform:
           translation:
             x: 0
             y: 125
