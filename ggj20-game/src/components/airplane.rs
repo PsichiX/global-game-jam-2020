@@ -17,7 +17,7 @@ pub struct Airplane {
     #[serde(default)]
     pub returning: bool,
     #[serde(skip)]
-    pub destination_city: Option<Entity>
+    pub destination_city: Option<Entity>,
 }
 
 impl Component for Airplane {

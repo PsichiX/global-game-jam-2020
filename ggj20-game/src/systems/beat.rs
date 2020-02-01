@@ -5,7 +5,6 @@ use crate::{
     resources::{beat::Beat, wave::Wave},
 };
 use oxygengine::prelude::*;
-use std::collections::HashSet;
 
 #[derive(Debug, Default)]
 pub struct BeatSystem;
@@ -25,8 +24,7 @@ impl<'s> System<'s> for BeatSystem {
         }
 
         // TODO: remove
-        if beat.is_sync_with_beat(0.1)
-        {
+        if beat.is_sync_with_beat(0.1) {
             info!("=== BEAT: {}", beat.current_time_seconds());
         }
     }

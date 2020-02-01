@@ -4,13 +4,8 @@ extern crate oxygengine;
 use crate::{
     assets::tiled_map_asset_protocol::TiledMapAssetProtocol,
     components::{
-        airplane::Airplane, city::City, infection_rate::InfectionRate, MainCameraTag,
-        MenuTrackSelectedTag,
-        airplane::Airplane, 
-        city::City,
-        infection_rate::InfectionRate, 
-        MainCameraTag,
-        letter::Letter
+        airplane::Airplane, city::City, infection_rate::InfectionRate, letter::Letter,
+        MainCameraTag, MenuTrackSelectedTag,
     },
     resources::wave::Wave,
     states::loading::LoadingState,

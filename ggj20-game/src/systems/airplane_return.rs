@@ -1,10 +1,6 @@
 #![allow(clippy::type_complexity)]
 
-use crate::components::{
-    airplane::Airplane, 
-    MainCameraTag,
-    letter::Letter
-};
+use crate::components::{airplane::Airplane, letter::Letter, MainCameraTag};
 
 use oxygengine::prelude::*;
 
@@ -33,7 +29,7 @@ impl<'s> System<'s> for AirplaneReturnSystem {
             let key = format!("key-{}", letter);
 
             if input.trigger_or_default(&key[..]).is_pressed() {
-                for (airplane, letter) in (&mut airplanes, &letters).join() { 
+                for (airplane, letter) in (&mut airplanes, &letters).join() {
                     if airplane.returning {
                         continue;
                     }
@@ -42,7 +38,7 @@ impl<'s> System<'s> for AirplaneReturnSystem {
                         airplane.reverse();
                     }
                 }
-            } 
+            }
         }
 
         if !input.trigger_or_default("mouse-left").is_pressed() {
