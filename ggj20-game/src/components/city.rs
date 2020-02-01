@@ -10,6 +10,8 @@ pub struct City {
     /// (from, to)
     #[serde(default)]
     pub levels_range: Option<(usize, usize)>,
+    #[serde(skip)]
+    pub infection_display_entity: Option<Entity>,
 }
 
 impl Component for City {

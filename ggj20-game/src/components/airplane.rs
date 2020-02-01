@@ -16,10 +16,23 @@ pub struct Airplane {
     pub speed: f32,
     #[serde(default)]
     pub returning: bool,
+    #[serde(skip)]
+    pub destination_city: Option<Entity>
 }
 
 impl Component for Airplane {
     type Storage = VecStorage<Self>;
+}
+
+impl Airplane {
+    pub fn reverse(&mut self) {
+        let sp = self.start_pos;
+        let ep = self.end_pos;
+        self.start_pos = ep;
+        self.end_pos = sp;
+        self.phase = 1.0 - self.phase;
+        self.returning = !self.returning;
+    }
 }
 
 impl Prefab for Airplane {}

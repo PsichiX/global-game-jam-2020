@@ -1,8 +1,11 @@
 template_name: airplane
 entities:
   - Data:
+      uid: airplane 
       components:
         Airplane: {}
+        InfectionRate: {}
+        Letter: {}
         CompositeRenderable:
           Image:
             image: images/white_airplane.png
@@ -13,4 +16,24 @@ entities:
           scale:
             x: 0.1
             y: 0.1
+        NonPersistent: ~
+  - Data: 
+      components: 
+        Name: airplane_letter
+        Parent: airplane
+        CompositeRenderable:
+          Text:
+            font: Verdana
+            text: Test
+            color:
+              r: 255
+              g: 0
+              b: 0
+              a: 255
+            align: Center
+            size: 350
+        CompositeTransform: 
+          translation:
+            x: 0
+            y: 100
         NonPersistent: ~

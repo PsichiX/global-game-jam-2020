@@ -8,7 +8,7 @@ enum Command {
     None,
     PrepareData,
     InstantiateCities(Vec<(Option<(usize, usize)>, Vec2)>),
-    ModifyCities(Vec<(Entity, Option<(usize, usize)>, Vec2)>),
+    ModifyCities(Vec<(Entity, Entity, Option<(usize, usize)>, Vec2)>),
 }
 
 impl Default for Command {
@@ -115,22 +115,29 @@ impl State for GameState {
                 let entities_data = entities_data
                     .into_iter()
                     .map(|(levels_range, pos)| {
-                        let entity = world
+                        let entities = world
                             .write_resource::<PrefabManager>()
                             .instantiate_world("city", world)
-                            .expect("Could not instantiate city")
+                            .expect("Could not instantiate city");
+                        let city_entity = entities
                             .get(0)
                             .copied()
                             .expect("City instance has no entities");
-                        (entity, levels_range, pos)
+                        let infection_display_entity = entities
+                            .get(1)
+                            .copied()
+                            .expect("City infection display instance has no entities");
+
+                        (city_entity, infection_display_entity, levels_range, pos)
                     })
                     .collect::<Vec<_>>();
                 self.command = Command::ModifyCities(entities_data);
             }
             Command::ModifyCities(entities_data) => {
-                for (entity, levels_range, pos) in entities_data {
+                for (entity, infection_display_entity, levels_range, pos) in entities_data {
                     let (mut city, mut transform) =
                         <(City, CompositeTransform)>::fetch(world, entity);
+                    city.infection_display_entity = Some(infection_display_entity);
                     city.levels_range = levels_range;
                     transform.set_translation(pos);
                 }

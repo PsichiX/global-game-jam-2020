@@ -1,6 +1,10 @@
 #![allow(clippy::type_complexity)]
 
-use crate::components::{airplane::Airplane, MainCameraTag};
+use crate::components::{
+    airplane::Airplane, 
+    MainCameraTag,
+    letter::Letter
+};
 
 use oxygengine::prelude::*;
 
@@ -15,14 +19,32 @@ impl<'s> System<'s> for AirplaneReturnSystem {
         Read<'s, InputController>,
         Read<'s, CompositeCameraCache>,
         WriteStorage<'s, Airplane>,
+        ReadStorage<'s, Letter>,
         ReadStorage<'s, MainCameraTag>,
         ReadStorage<'s, CompositeTransform>,
     );
 
     fn run(
         &mut self,
-        (entities, input, camera_cache, mut airplanes, main_cameras, transforms): Self::SystemData,
+        (entities, input, camera_cache, mut airplanes, letters, main_cameras, transforms): Self::SystemData,
     ) {
+        for c in b'a'..=b'z' {
+            let letter = c as char;
+            let key = format!("key-{}", letter);
+
+            if input.trigger_or_default(&key[..]).is_pressed() {
+                for (airplane, letter) in (&mut airplanes, &letters).join() { 
+                    if airplane.returning {
+                        continue;
+                    }
+
+                    if letter.letter == c {
+                        airplane.reverse();
+                    }
+                }
+            } 
+        }
+
         if !input.trigger_or_default("mouse-left").is_pressed() {
             return;
         }
@@ -37,7 +59,7 @@ impl<'s> System<'s> for AirplaneReturnSystem {
             };
         let range_sqr = CLICK_RANGE * CLICK_RANGE;
 
-        for (mut airplane, transform) in (&mut airplanes, &transforms).join() {
+        for (airplane, transform) in (&mut airplanes, &transforms).join() {
             if airplane.returning || airplane.tween.is_none() {
                 continue;
             }
@@ -46,12 +68,7 @@ impl<'s> System<'s> for AirplaneReturnSystem {
             if let Some(screen_pos) = camera_cache.world_to_screen_space(camera_entity, world_pos) {
                 let distance_sqr = (pointer_pos - screen_pos).sqr_magnitude();
                 if distance_sqr <= range_sqr {
-                    let sp = airplane.start_pos;
-                    let ep = airplane.end_pos;
-                    airplane.start_pos = ep;
-                    airplane.end_pos = sp;
-                    airplane.phase = 1.0 - airplane.phase;
-                    airplane.returning = true;
+                    airplane.reverse();
                 }
             }
         }
