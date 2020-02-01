@@ -22,6 +22,25 @@ entities:
             image: images/world.png
         CompositeTransform: {}
         NonPersistent: ~
+  - Data:
+      components:
+        CompositeRenderLayer: 1
+        CompositeCameraAlignment:
+          x: 1
+          y: 1
+        CompositeRenderable:
+          Image:
+            image: images/wirus.png
+            destination:
+              x: -50
+              y: -50
+              w: 100
+              h: 100 
+        CompositeTransform: 
+          translation: 
+            x: -75
+            y: -250
+        NonPersistent: ~
   # - Data:
   #     components:
   #       CompositeRenderable:

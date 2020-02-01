@@ -50,7 +50,14 @@ impl<'s> System<'s> for WaveSystem {
 
             self.city += 1;
 
-            let cities = (&entities, &cities, &transforms).join().collect::<Vec<_>>();
+            let cities = (&entities, &cities, &transforms).join()
+                .filter(|(_, city, _)| { 
+                    match city.levels_range {
+                        Some(r) => waves.current_level >= r.0 && waves.current_level <= r.1,
+                        None => false
+                    }
+                })
+                .collect::<Vec<_>>();
 
             if cities.is_empty() {
                 return;
@@ -62,8 +69,11 @@ impl<'s> System<'s> for WaveSystem {
 
             let mut letter_ascii = None;
 
-            for c in crate::resources::wave::LETTERS {
-                if *waves.airplane_letters.get(c).expect("Letter was not found") {
+            for i in 0..waves.available_letters {
+                let letter_index = (i + waves.current_start_letter) % waves.available_letters;
+                let c = crate::resources::wave::LETTERS[letter_index];
+
+                if *waves.airplane_letters.get(&c).expect("Letter was not found") {
                     continue;
                 }
 
@@ -72,7 +82,7 @@ impl<'s> System<'s> for WaveSystem {
             }
 
             let letter_ascii = match letter_ascii {
-                Some(c) => *c,
+                Some(c) => c,
                 None => { return; }
             };
 
@@ -89,19 +99,11 @@ impl<'s> System<'s> for WaveSystem {
                 )
                 .unwrap();
 
+            let city_index = self.city;
             let airplane_entity = airplane_entities[0];
             let airplane_letter_entity = airplane_entities[1];
 
             lazy_update.exec(move |world| {
-                {
-                    let composite_renderable_storage = &mut world.write_storage::<CompositeRenderable>();
-                    let renderable = composite_renderable_storage.get_mut(airplane_letter_entity).expect("Cannot get renderable from airplane letter entity");
-
-                    if let Renderable::Text(data) = &mut renderable.0 {
-                        data.text = letter.to_uppercase().to_string().into();
-                    }
-                }
-
                 {
                     let letter_storage = &mut world.write_storage::<Letter>();
                     let letter_comp = letter_storage.get_mut(airplane_entity).expect("Cannot get the letter component for airplane");
@@ -122,15 +124,40 @@ impl<'s> System<'s> for WaveSystem {
                     airplane.end_pos = city_end.get_translation();
                     airplane.phase = 0.0;
                     airplane.tween = Some(Tween::new(TweenType::Cubic, EaseType::InOut));
-                    airplane.speed = 0.2;
+                    airplane.speed = 0.05;
                     airplane.destination_city = Some(city_entity);
+                    airplane.letter_display = Some(airplane_letter_entity);
                 }
 
-                {
+                let infection_rate = {
                     let infection_rate_storage = &mut world.write_storage::<InfectionRate>(); 
                     let infection_rate = infection_rate_storage.get_mut(airplane_entity).expect("");
                     
-                    infection_rate.rate = 10.max(city_infection_rate / 100);
+                    if city_index % 7 == 0 {
+                        infection_rate.rate = 0;
+                    }
+                    else {
+                        infection_rate.rate = 10.max(city_infection_rate / 100);
+                    }
+
+                    infection_rate.rate
+                };
+
+                {
+                    let composite_renderable_storage = &mut world.write_storage::<CompositeRenderable>();
+                    let renderable = composite_renderable_storage.get_mut(airplane_letter_entity).expect("Cannot get renderable from airplane letter entity");
+
+                    if let Renderable::Image(data) = &mut renderable.0 {
+                        data.image = format!("images/letters/{}.png", letter.to_string()).into();
+                    }
+
+                    let renderable = composite_renderable_storage.get_mut(airplane_entity).expect("Cannot get renderable from airplane entity");
+                    
+                    if let Renderable::Image(data) = &mut renderable.0 {
+                        if infection_rate != 0 {
+                            data.image = "images/red_airplane.png".into();
+                        }
+                    }
                 }
 
                 {
