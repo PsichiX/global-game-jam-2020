@@ -4,7 +4,7 @@ use serde::{Deserialize, Serialize};
 #[derive(Debug, Default, Clone, Serialize, Deserialize)]
 pub struct Beat {
     pub title: String,
-    pub bmp: usize,
+    pub bpm: usize,
     #[serde(default)]
     pub base_offset_seconds: f64,
     #[serde(default = "Beat::default_speed")]
@@ -25,7 +25,7 @@ impl Beat {
     }
 
     pub fn beat_duration(&self) -> f64 {
-        60.0 / (self.bmp as f64)
+        60.0 / (self.bpm as f64)
     }
 
     pub fn current_beat_time(&self) -> f64 {
@@ -34,6 +34,10 @@ impl Beat {
 
     pub fn beats_count(&self, time_seconds: f64) -> usize {
         ((time_seconds - self.base_offset_seconds) / self.beat_duration()) as usize
+    }
+
+    pub fn current_beats_count(&self) -> usize {
+        self.beats_count(self.current_time_seconds)
     }
 
     pub fn current_beat_phase(&self) -> f64 {
@@ -60,6 +64,8 @@ impl Beat {
     pub fn process(&mut self, current_time_seconds: f64) -> bool {
         self.last_time_seconds =
             std::mem::replace(&mut self.current_time_seconds, current_time_seconds);
+        info!("=== LAST TIME: {}", self.last_time_seconds);
+        info!("=== CURRENT TIME: {}", self.current_time_seconds);
         self.pulse()
     }
 }

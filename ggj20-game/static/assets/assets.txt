@@ -1,3 +1,4 @@
 set://images/assets.txt
-set://prefabs/assets.txt
 set://maps/assets.txt
+set://music/assets.txt
+set://prefabs/assets.txt

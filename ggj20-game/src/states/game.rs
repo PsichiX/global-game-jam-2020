@@ -1,5 +1,7 @@
 use crate::{
-    assets::tiled_map_asset_protocol::TiledMapAsset, components::city::City, resources::wave::Wave,
+    assets::tiled_map_asset_protocol::TiledMapAsset,
+    components::city::City,
+    resources::{beat::Beat, wave::Wave},
 };
 use oxygengine::prelude::*;
 
@@ -40,11 +42,30 @@ impl State for GameState {
             .expect("Could not instantiate scene")
             .get(0)
             .expect("Could not get camera entity from scene instance");
-        let music_name = format!("audio://music/{}.ogg", self.music_name).into();
 
+        let music_name = format!("audio://music/{}.ogg", self.music_name);
+        let config_name = format!("yaml://music/{}.yaml", self.music_name);
         world.read_resource::<LazyUpdate>().exec_mut(move |world| {
+            info!("=== SETUP BEAT: {} | {}", music_name, config_name);
+            let config = world
+                .read_resource::<AssetsDatabase>()
+                .asset_by_path(&config_name)
+                .expect(&format!(
+                    "Could not load music config asset: {}",
+                    config_name
+                ))
+                .get::<YamlAsset>()
+                .expect(&format!(
+                    "Music config asset is not an YAML asset: {}",
+                    config_name
+                ))
+                .deserialize::<Beat>()
+                .expect(&format!("Could not deserialize music config: {}", config_name));
+
+            info!("=== CHANGE BEAT CONFIG: {:?}", config);
+            *world.write_resource::<Beat>() = config;
             *<AudioSource>::fetch(world, camera_entity) =
-                AudioSource::new_play(music_name, true, true);
+                AudioSource::new_play(music_name.into(), true, true);
         });
 
         self.command = Command::PrepareData;
