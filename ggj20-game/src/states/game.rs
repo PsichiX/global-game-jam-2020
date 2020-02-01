@@ -44,6 +44,7 @@ impl State for GameState {
             .expect("Could not get camera entity from scene instance");
 
         let music_name = format!("audio://music/{}.ogg", self.music_name);
+        let music_file_name = format!("music/{}.ogg", self.music_name);
         let config_name = format!("yaml://music/{}.yaml", self.music_name);
         world.read_resource::<LazyUpdate>().exec_mut(move |world| {
             info!("=== SETUP BEAT: {} | {}", music_name, config_name);
@@ -68,7 +69,7 @@ impl State for GameState {
             info!("=== CHANGE BEAT CONFIG: {:?}", config);
             *world.write_resource::<Beat>() = config;
             *<AudioSource>::fetch(world, camera_entity) =
-                AudioSource::new_play(music_name.into(), true, true);
+                AudioSource::new_play(music_file_name.into(), true, true);
         });
 
         self.command = Command::PrepareData;
