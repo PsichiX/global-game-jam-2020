@@ -60,7 +60,10 @@ impl State for GameState {
                     config_name
                 ))
                 .deserialize::<Beat>()
-                .expect(&format!("Could not deserialize music config: {}", config_name));
+                .expect(&format!(
+                    "Could not deserialize music config: {}",
+                    config_name
+                ));
 
             info!("=== CHANGE BEAT CONFIG: {:?}", config);
             *world.write_resource::<Beat>() = config;
