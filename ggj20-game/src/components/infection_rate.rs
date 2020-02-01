@@ -3,6 +3,7 @@ use serde::{Deserialize, Serialize};
 
 #[derive(Debug, Default, Copy, Clone, Serialize, Deserialize)]
 pub struct InfectionRate {
+    #[serde(default)]
     pub rate: i32,
 }
 

@@ -2,7 +2,6 @@ template_name: city
 entities:
   - Data:
       components:
-        Airplane: {}
         City: {}
         InfectionRate: {}
         CompositeRenderable:

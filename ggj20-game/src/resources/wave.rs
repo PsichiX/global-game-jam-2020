@@ -10,8 +10,6 @@ pub struct Wave {
     pub airplane_letters: HashMap<u8, Option<Entity>>,
     pub is_paused: bool,
     pub available_letters: usize,
-    /// {entity: (level from, level to)}
-    pub cities_levels: HashMap<Entity, (usize, usize)>,
 }
 
 impl Wave {
@@ -22,7 +20,6 @@ impl Wave {
             airplane_letters: HashMap::new(),
             is_paused: false,
             available_letters: 1,
-            cities_levels: HashMap::new(),
         };
 
         for c in (' ' as u8)..('~' as u8) {
