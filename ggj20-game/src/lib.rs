@@ -6,6 +6,7 @@ use crate::{
     resources::{wave::Wave},
     systems::{
         wave::WaveSystem,
+        view::ViewSystem,
         airplane_move::AirplaneMoveSystem,
         airplane_land::AirplaneLandSystem
     },
@@ -16,9 +17,9 @@ use oxygengine::prelude::*;
 use wasm_bindgen::prelude::*;
 
 mod components;
+mod resources;
 mod states;
 mod systems;
-mod resources;
 mod utils;
 
 #[cfg(feature = "wee_alloc")]
@@ -92,6 +93,7 @@ pub fn main_js() -> Result<(), JsValue> {
         .with_system(WaveSystem::default(), "wave", &[])
         .with_system(AirplaneMoveSystem::default(), "airplane_move", &[])
         .with_system(AirplaneLandSystem::default(), "airplane_land", &[])
+        .with_system(ViewSystem::default(), "view", &["wave"])
         .build(LoadingState::default(), WebAppTimer::default());
 
     // Application run phase - spawn runner that ticks our app.

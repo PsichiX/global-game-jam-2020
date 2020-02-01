@@ -5,7 +5,7 @@ use serde::{Deserialize, Serialize};
 pub struct City {
     pub name: String,
     #[serde(default)]
-    pub infection_protection_time: i32
+    pub infection_protection_time: i32,
 }
 
 impl Component for City {

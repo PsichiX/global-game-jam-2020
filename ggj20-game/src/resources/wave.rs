@@ -1,5 +1,5 @@
-use std::collections::HashMap;
 use oxygengine::prelude::*;
+use std::collections::HashMap;
 
 #[derive(Debug, Default, Clone)]
 pub struct Wave {
