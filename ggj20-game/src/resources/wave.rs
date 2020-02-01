@@ -10,6 +10,7 @@ pub struct Wave {
     pub airplane_letters: HashMap<u8, Option<Entity>>,
     pub is_paused: bool,
     pub available_letters: usize,
+    pub current_level: usize,
 }
 
 impl Wave {
@@ -20,9 +21,10 @@ impl Wave {
             airplane_letters: HashMap::new(),
             is_paused: false,
             available_letters: 1,
+            current_level: 0,
         };
 
-        for c in (' ' as u8)..('~' as u8) {
+        for c in b'a'..=b'z' {
             wave.airplane_letters.insert(c, None);
         }
 

@@ -69,10 +69,12 @@ pub fn main_js() -> Result<(), JsValue> {
             input.register(WebKeyboardInputDevice::new(get_event_target_document()));
             input.register(WebMouseInputDevice::new(get_event_target_by_id("screen")));
             // map input axes and triggers to devices.
-            input.map_axis("move-up", "keyboard", "KeyW");
-            input.map_axis("move-down", "keyboard", "KeyS");
-            input.map_axis("move-left", "keyboard", "KeyA");
-            input.map_axis("move-right", "keyboard", "KeyD");
+            for c in b'a'..=b'z' {
+                let c = c as char;
+                let id = format!("key-{}", c);
+                let mapping = format!("Key{}", c.to_uppercase());
+                input.map_trigger(&id, "keyboard", &mapping);
+            }
             input.map_axis("mouse-x", "mouse", "x");
             input.map_axis("mouse-y", "mouse", "y");
             input.map_trigger("mouse-left", "mouse", "left");

@@ -1,6 +1,9 @@
 #![allow(clippy::type_complexity)]
 
-use crate::{components::MainCameraTag, resources::wave::Wave};
+use crate::{
+    components::{city::City, MainCameraTag},
+    resources::wave::Wave,
+};
 use oxygengine::prelude::*;
 use std::collections::HashSet;
 
@@ -11,22 +14,26 @@ pub struct ViewSystem {
 
 impl<'s> System<'s> for ViewSystem {
     type SystemData = (
+        Entities<'s>,
         Read<'s, Wave>,
+        ReadStorage<'s, City>,
         WriteStorage<'s, CompositeTransform>,
         ReadStorage<'s, MainCameraTag>,
     );
 
-    fn run(&mut self, (wave, mut transforms, main_cameras): Self::SystemData) {
-        let entities = wave
-            .airplane_letters
-            .values()
-            .filter_map(|e| *e)
+    fn run(&mut self, (entities, wave, cities, mut transforms, main_cameras): Self::SystemData) {
+        self.entities = (&entities, &cities)
+            .join()
+            .filter_map(|(entity, city)| {
+                if let Some(levels_range) = city.levels_range {
+                    if wave.current_level >= levels_range.0 && wave.current_level <= levels_range.1
+                    {
+                        return Some(entity);
+                    }
+                }
+                None
+            })
             .collect::<HashSet<_>>();
-        if self.entities.union(&entities).count() == 0 {
-            return;
-        }
-
-        self.entities = entities;
 
         let points = self
             .entities
