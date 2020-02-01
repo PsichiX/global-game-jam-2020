@@ -1,7 +1,12 @@
 #![allow(clippy::type_complexity)]
 
 use crate::{
-    components::{airplane::Airplane, city::City, infection_rate::InfectionRate},
+    components::{
+        airplane::Airplane, 
+        city::City, 
+        infection_rate::InfectionRate,
+        letter::Letter
+    },
     resources::wave::Wave,
     utils::tween::*,
 };
@@ -18,7 +23,7 @@ impl<'s> System<'s> for WaveSystem {
         Entities<'s>,
         Read<'s, LazyUpdate>,
         ReadExpect<'s, AppLifeCycle>,
-        Read<'s, Wave>,
+        Write<'s, Wave>,
         Write<'s, PrefabManager>,
         ReadStorage<'s, City>,
         ReadStorage<'s, CompositeTransform>,
@@ -26,7 +31,7 @@ impl<'s> System<'s> for WaveSystem {
 
     fn run(
         &mut self,
-        (entities, lazy_update, lifecycle, waves, mut prefabs, cities, transforms): Self::SystemData,
+        (entities, lazy_update, lifecycle, mut waves, mut prefabs, cities, transforms): Self::SystemData,
     ) {
         if waves.is_paused {
             return;
@@ -55,16 +60,55 @@ impl<'s> System<'s> for WaveSystem {
             let city_start = cities[self.city as usize % cities.len()].2.clone();
             let city_end = cities[(self.city + 1) as usize % cities.len()].2.clone();
 
-            let airplane_entity = prefabs
+            let mut letter_ascii = None;
+
+            for c in crate::resources::wave::LETTERS {
+                if *waves.airplane_letters.get(c).expect("Letter was not found") {
+                    continue;
+                }
+
+                letter_ascii = Some(c);
+                break;
+            }
+
+            let letter_ascii = match letter_ascii {
+                Some(c) => *c,
+                None => { return; }
+            };
+
+            let letter = letter_ascii as char;
+
+            waves.airplane_letters.insert(letter_ascii, true);
+            
+            let airplane_entities = prefabs
                 .instantiate_direct(
                     "airplane",
                     &entities,
                     &lazy_update,
                     lifecycle.current_state_token(),
                 )
-                .unwrap()[0];
+                .unwrap();
+
+            let airplane_entity = airplane_entities[0];
+            let airplane_letter_entity = airplane_entities[1];
 
             lazy_update.exec(move |world| {
+                {
+                    let composite_renderable_storage = &mut world.write_storage::<CompositeRenderable>();
+                    let renderable = composite_renderable_storage.get_mut(airplane_letter_entity).expect("Cannot get renderable from airplane letter entity");
+
+                    if let Renderable::Text(data) = &mut renderable.0 {
+                        data.text = letter.to_uppercase().to_string().into();
+                    }
+                }
+
+                {
+                    let letter_storage = &mut world.write_storage::<Letter>();
+                    let letter_comp = letter_storage.get_mut(airplane_entity).expect("Cannot get the letter component for airplane");
+
+                    letter_comp.letter = letter_ascii; 
+                }
+
                 let city_infection_rate = {
                     let city_infection_rate_storage = &world.read_storage::<InfectionRate>();
                     city_infection_rate_storage.get(city_entity).expect("").rate
@@ -77,7 +121,7 @@ impl<'s> System<'s> for WaveSystem {
                     airplane.start_pos = city_start.get_translation();
                     airplane.end_pos = city_end.get_translation();
                     airplane.phase = 0.0;
-                    airplane.tween = Some(Tween::new(TweenType::Linear, EaseType::Out));
+                    airplane.tween = Some(Tween::new(TweenType::Cubic, EaseType::InOut));
                     airplane.speed = 0.2;
                     airplane.destination_city = Some(city_entity);
                 }

@@ -24,19 +24,23 @@ impl<'s> System<'s> for AirplaneMoveSystem {
 
                 let path = Tween::new(TweenType::Cubic, EaseType::InOut);
 
-                let x = (airplane.phase) * (airplane.end_pos - airplane.start_pos).x;
-                let y = path.tween(airplane.phase) * (airplane.end_pos - airplane.start_pos).y;
+                // TODO: Choose one
+                // let path_phase = tween.tween(airplane.phase);
+                let path_phase = airplane.phase;
+
+                let x = (path_phase) * (airplane.end_pos - airplane.start_pos).x;
+                let y = path.tween(path_phase) * (airplane.end_pos - airplane.start_pos).y;
 
                 if airplane.returning {
-                    let next_x = (airplane.phase - 0.01).max(0.0) * (airplane.end_pos - airplane.start_pos).x;
-                    let next_y = path.tween(airplane.phase - 0.01).min(0.0) * (airplane.end_pos - airplane.start_pos).y;
+                    let next_x = (path_phase + 0.01).min(1.0) * (airplane.end_pos - airplane.start_pos).x;
+                    let next_y = path.tween(path_phase + 0.01).min(1.0) * (airplane.end_pos - airplane.start_pos).y;
                     let dir = Vec2 { x: next_x, y: next_y } - Vec2 { x, y };
 
                     transform.set_rotation(dir.y.atan2(dir.x) + std::f32::consts::PI * 0.5);
                 }
                 else {
-                    let next_x = (airplane.phase + 0.01).min(1.0) * (airplane.end_pos - airplane.start_pos).x;
-                    let next_y = path.tween(airplane.phase + 0.01).min(1.0) * (airplane.end_pos - airplane.start_pos).y;
+                    let next_x = (path_phase + 0.01).min(1.0) * (airplane.end_pos - airplane.start_pos).x;
+                    let next_y = path.tween(path_phase + 0.01).min(1.0) * (airplane.end_pos - airplane.start_pos).y;
                     let dir = Vec2 { x: next_x, y: next_y } - Vec2 { x, y };
 
                     transform.set_rotation(dir.y.atan2(dir.x) + std::f32::consts::PI * 0.5);

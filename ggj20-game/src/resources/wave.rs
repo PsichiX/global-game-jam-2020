@@ -1,13 +1,13 @@
 use oxygengine::prelude::*;
 use std::collections::HashMap;
 
-const LETTERS: &[u8] = &[b'e', b'a', b'r', b'i', b'o', b't', b'n', b's', b'l', b'c'];
+pub const LETTERS: &[u8] = &[b'e', b'a', b'r', b'i', b'o', b't', b'n', b's', b'l', b'c'];
 
 #[derive(Debug, Default, Clone)]
 pub struct Wave {
     pub airplanes_count: i32,
     pub airplane_interval: f64,
-    pub airplane_letters: HashMap<u8, Option<Entity>>,
+    pub airplane_letters: HashMap<u8, bool>,
     pub is_paused: bool,
     pub available_letters: usize,
     pub current_level: usize,
@@ -25,7 +25,7 @@ impl Wave {
         };
 
         for c in b'a'..=b'z' {
-            wave.airplane_letters.insert(c, None);
+            wave.airplane_letters.insert(c, false);
         }
 
         wave
