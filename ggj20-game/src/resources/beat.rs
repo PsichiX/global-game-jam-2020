@@ -64,8 +64,6 @@ impl Beat {
     pub fn process(&mut self, current_time_seconds: f64) -> bool {
         self.last_time_seconds =
             std::mem::replace(&mut self.current_time_seconds, current_time_seconds);
-        info!("=== LAST TIME: {}", self.last_time_seconds);
-        info!("=== CURRENT TIME: {}", self.current_time_seconds);
         self.pulse()
     }
 }

@@ -21,7 +21,7 @@ module.exports = {
   plugins: [
     new CopyPlugin([
       path.resolve(__dirname, "static/index.html"),
-      path.resolve(__dirname, "static/assets.pack"),
+      path.resolve(__dirname, "static/assets/"),
     ]),
 
     new WasmPackPlugin({

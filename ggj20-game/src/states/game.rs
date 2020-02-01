@@ -47,7 +47,6 @@ impl State for GameState {
         let music_file_name = format!("music/{}.ogg", self.music_name);
         let config_name = format!("yaml://music/{}.yaml", self.music_name);
         world.read_resource::<LazyUpdate>().exec_mut(move |world| {
-            info!("=== SETUP BEAT: {} | {}", music_name, config_name);
             let config = world
                 .read_resource::<AssetsDatabase>()
                 .asset_by_path(&config_name)
@@ -66,7 +65,6 @@ impl State for GameState {
                     config_name
                 ));
 
-            info!("=== CHANGE BEAT CONFIG: {:?}", config);
             *world.write_resource::<Beat>() = config;
             *<AudioSource>::fetch(world, camera_entity) =
                 AudioSource::new_play(music_file_name.into(), true, true);
@@ -80,17 +78,12 @@ impl State for GameState {
             let input = &world.read_resource::<InputController>();
             if input.trigger_or_default("key-a").is_pressed() {
                 world.write_resource::<Wave>().current_level += 1;
-                info!(
-                    "=== ADD LEVEL: {}",
-                    world.read_resource::<Wave>().current_level
-                );
             } else {
                 if input.trigger_or_default("key-d").is_pressed() {
                     let wave = &mut world.write_resource::<Wave>();
                     if wave.current_level > 0 {
                         wave.current_level -= 1;
                     }
-                    info!("=== SUB LEVEL: {}", wave.current_level);
                 }
             }
         }
