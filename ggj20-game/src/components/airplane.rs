@@ -8,7 +8,7 @@ pub struct Airplane {
     #[serde(default)]
     pub end_pos: Vec2,
     #[serde(default)]
-    pub phase: f32
+    pub phase: f32,
 }
 
 impl Component for Airplane {

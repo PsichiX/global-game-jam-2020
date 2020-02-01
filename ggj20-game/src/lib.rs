@@ -3,18 +3,18 @@ extern crate oxygengine;
 
 use crate::{
     components::{airplane::Airplane, city::City, infection_rate::InfectionRate},
-    resources::{wave::Wave},
-    systems::{wave::WaveSystem},
+    resources::wave::Wave,
     states::loading::LoadingState,
     // systems::keyboard_movement::KeyboardMovementSystem,
+    systems::{view::ViewSystem, wave::WaveSystem},
 };
 use oxygengine::prelude::*;
 use wasm_bindgen::prelude::*;
 
 mod components;
+mod resources;
 mod states;
 mod systems;
-mod resources;
 
 #[cfg(feature = "wee_alloc")]
 #[global_allocator]
@@ -85,6 +85,7 @@ pub fn main_js() -> Result<(), JsValue> {
         .with_component::<InfectionRate>()
         .with_resource(Wave::new(20, 1.0))
         .with_system(WaveSystem::default(), "wave", &[])
+        .with_system(ViewSystem::default(), "view", &["wave"])
         .build(LoadingState::default(), WebAppTimer::default());
 
     // Application run phase - spawn runner that ticks our app.

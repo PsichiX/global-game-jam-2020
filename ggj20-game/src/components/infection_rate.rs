@@ -3,7 +3,7 @@ use serde::{Deserialize, Serialize};
 
 #[derive(Debug, Default, Copy, Clone, Serialize, Deserialize)]
 pub struct InfectionRate {
-    pub rate: i32
+    pub rate: i32,
 }
 
 impl Component for InfectionRate {

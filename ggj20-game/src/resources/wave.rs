@@ -1,5 +1,5 @@
-use std::collections::HashMap;
 use oxygengine::prelude::*;
+use std::collections::HashMap;
 
 #[derive(Debug, Default, Clone)]
 pub struct Wave {
@@ -13,7 +13,7 @@ impl Wave {
         let mut wave = Self {
             airplanes_count,
             airplane_interval,
-            airplane_letters: HashMap::new()
+            airplane_letters: HashMap::new(),
         };
 
         for c in (' ' as u8)..('~' as u8) {
