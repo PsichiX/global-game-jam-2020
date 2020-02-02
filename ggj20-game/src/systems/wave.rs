@@ -21,13 +21,14 @@ impl<'s> System<'s> for WaveSystem {
         Write<'s, Wave>,
         Write<'s, PrefabManager>,
         ReadStorage<'s, City>,
+        ReadStorage<'s, InfectionRate>,
         ReadStorage<'s, CompositeTransform>,
         Read<'s, Beat>,
     );
 
     fn run(
         &mut self,
-        (entities, lazy_update, lifecycle, mut waves, mut prefabs, cities, transforms, beat): Self::SystemData,
+        (entities, lazy_update, lifecycle, mut waves, mut prefabs, cities, infection_rates, transforms, beat): Self::SystemData,
     ) {
         if waves.is_paused {
             return;
@@ -47,9 +48,9 @@ impl<'s> System<'s> for WaveSystem {
         if beat.pulse() {
             self.city += 1;
 
-            let cities = (&entities, &cities, &transforms)
+            let cities = (&entities, &cities, &transforms, &infection_rates)
                 .join()
-                .filter(|(_, city, _)| match city.levels_range {
+                .filter(|(_, city, _, _)| match city.levels_range {
                     Some(r) => waves.current_level >= r.0 && waves.current_level <= r.1,
                     None => false,
                 })
@@ -59,9 +60,33 @@ impl<'s> System<'s> for WaveSystem {
                 return;
             }
 
-            let city_entity = cities[self.city as usize % cities.len()].0;
-            let city_start = cities[self.city as usize % cities.len()].2.clone();
-            let city_end = cities[(self.city + 1) as usize % cities.len()].2.clone();
+            let start_city_index = self.city as usize % cities.len();
+            let city_entity = cities[start_city_index].0;
+            let city_start = cities[start_city_index].2.clone();
+            let mut city_end = None;
+
+            for i in 0..cities.len() {
+                let end_city_index = (self.city + i as i32) as usize % cities.len();
+
+                if end_city_index == start_city_index {
+                    continue;
+                }
+
+                let (_, city, transform, infection_rate) = cities[end_city_index];
+
+                if infection_rate.rate > 0 {
+                    city_end = Some(transform.clone());
+                    break;
+                }
+            }
+
+            let city_end = match city_end {
+                Some(v) => v,
+                None => {
+                    // TODO: Cannot find a living end city, end the game
+                    return;
+                }
+            };
 
             let mut letter_ascii = None;
 
@@ -140,7 +165,7 @@ impl<'s> System<'s> for WaveSystem {
                     if city_index % 7 == 0 {
                         infection_rate.rate = 0;
                     } else {
-                        infection_rate.rate = 10.max(city_infection_rate / 100);
+                        infection_rate.rate = -1;
                     }
 
                     infection_rate.rate

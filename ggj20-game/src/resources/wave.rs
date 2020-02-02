@@ -20,6 +20,7 @@ pub struct Wave {
 
     pub current_level: usize,
     pub combo: i32,
+    pub score: i32
 }
 
 impl Wave {
@@ -33,6 +34,7 @@ impl Wave {
             current_start_letter: 0,
             current_level: 0,
             combo: 0,
+            score: 0
         };
 
         for c in b'a'..=b'z' {
