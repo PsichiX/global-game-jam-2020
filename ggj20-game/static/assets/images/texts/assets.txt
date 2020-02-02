@@ -1,0 +1,8 @@
+png://images/texts/2.png
+png://images/texts/max.png
+png://images/texts/3.png
+png://images/texts/1.png
+png://images/texts/combo.png
+png://images/texts/5.png
+png://images/texts/miss.png
+png://images/texts/4.png

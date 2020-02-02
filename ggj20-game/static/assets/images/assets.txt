@@ -29,4 +29,7 @@ png://images/virus_light_2.png
 png://images/right_part_info_stripe.png
 png://images/virus_light_3.png
 png://images/green_city.png
+png://images/red_loader.png
+png://images/green_loader.png
 set://images/letters/assets.txt
+set://images/texts/assets.txt

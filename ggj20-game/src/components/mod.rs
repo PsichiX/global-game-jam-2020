@@ -6,6 +6,7 @@ pub mod city;
 pub mod infection_rate;
 pub mod letter;
 pub mod ui_element;
+pub mod fade_out;
 
 #[derive(Debug, Default, Copy, Clone, Serialize, Deserialize)]
 pub struct MainCameraTag;
@@ -26,3 +27,54 @@ impl Component for MenuTrackSelectedTag {
 
 impl Prefab for MenuTrackSelectedTag {}
 impl PrefabComponent for MenuTrackSelectedTag {}
+
+#[derive(Debug, Default, Copy, Clone, Serialize, Deserialize)]
+pub struct VirusTag;
+
+impl Component for VirusTag {
+    type Storage = VecStorage<Self>;
+}
+
+impl Prefab for VirusTag {}
+impl PrefabComponent for VirusTag {}
+
+// Combo
+#[derive(Debug, Default, Copy, Clone, Serialize, Deserialize)]
+pub struct ComboProgressTag;
+
+impl Component for ComboProgressTag {
+    type Storage = VecStorage<Self>;
+}
+
+impl Prefab for ComboProgressTag {}
+impl PrefabComponent for ComboProgressTag {}
+
+#[derive(Debug, Default, Copy, Clone, Serialize, Deserialize)]
+pub struct ComboLeftNumberTag;
+
+impl Component for ComboLeftNumberTag {
+    type Storage = VecStorage<Self>;
+}
+
+impl Prefab for ComboLeftNumberTag {}
+impl PrefabComponent for ComboLeftNumberTag {}
+
+#[derive(Debug, Default, Copy, Clone, Serialize, Deserialize)]
+pub struct ComboRightNumberTag;
+
+impl Component for ComboRightNumberTag {
+    type Storage = VecStorage<Self>;
+}
+
+impl Prefab for ComboRightNumberTag {}
+impl PrefabComponent for ComboRightNumberTag {}
+
+#[derive(Debug, Default, Copy, Clone, Serialize, Deserialize)]
+pub struct ComboMissTag;
+
+impl Component for ComboMissTag {
+    type Storage = VecStorage<Self>;
+}
+
+impl Prefab for ComboMissTag {}
+impl PrefabComponent for ComboMissTag {}

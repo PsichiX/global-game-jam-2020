@@ -6,6 +6,8 @@ use crate::{
     components::{
         airplane::Airplane, city::City, infection_rate::InfectionRate, letter::Letter,
         ui_element::UiElement, MainCameraTag, MenuTrackSelectedTag,
+        MainCameraTag, MenuTrackSelectedTag, VirusTag, ComboProgressTag,
+        ComboLeftNumberTag, ComboRightNumberTag, ComboMissTag, fade_out::FadeOut
     },
     resources::wave::Wave,
     states::loading::LoadingState,
@@ -13,7 +15,8 @@ use crate::{
     systems::{
         airplane_land::AirplaneLandSystem, airplane_move::AirplaneMoveSystem,
         airplane_return::AirplaneReturnSystem, beat::BeatSystem, ui::UiSystem, view::ViewSystem,
-        wave::WaveSystem,
+        wave::WaveSystem, virus_beat::VirusBeatSystem, combo::ComboSystem,
+        fade_out::FadeOutSystem
     },
 };
 use oxygengine::prelude::*;
@@ -69,6 +72,12 @@ pub fn main_js() -> Result<(), JsValue> {
             prefabs.register_component_factory::<MenuTrackSelectedTag>("MenuTrackSelectedTag");
             prefabs.register_component_factory::<Letter>("Letter");
             prefabs.register_component_factory::<UiElement>("UiElement");
+            prefabs.register_component_factory::<VirusTag>("VirusTag");
+            prefabs.register_component_factory::<ComboProgressTag>("ComboProgressTag");
+            prefabs.register_component_factory::<ComboRightNumberTag>("ComboRightNumberTag");
+            prefabs.register_component_factory::<ComboLeftNumberTag>("ComboLeftNumberTag");
+            prefabs.register_component_factory::<ComboMissTag>("ComboMissTag");
+            prefabs.register_component_factory::<FadeOut>("FadeOut");
         })
         // install input managment.
         .with_bundle(oxygengine::input::bundle_installer, |input| {
@@ -107,6 +116,9 @@ pub fn main_js() -> Result<(), JsValue> {
         .with_system(ViewSystem::default(), "view", &[])
         .with_system(BeatSystem::default(), "beat", &[])
         .with_system(UiSystem::default(), "ui", &[])
+        .with_system(VirusBeatSystem::default(), "virus_beat", &[])
+        .with_system(ComboSystem::default(), "combo_beat", &[])
+        .with_system(FadeOutSystem::default(), "fade_out_system", &[])
         .build(LoadingState::default(), WebAppTimer::default());
 
     // Application run phase - spawn runner that ticks our app.
