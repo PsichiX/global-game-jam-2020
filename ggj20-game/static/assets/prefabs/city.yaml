@@ -6,7 +6,7 @@ entities:
         Tag: world
         City: {}
         InfectionRate:
-          rate: 10
+          rate: 7
         CompositeRenderable:
           Image:
             image: images/white_city.png

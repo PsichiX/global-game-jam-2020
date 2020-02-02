@@ -1,6 +1,9 @@
 #![allow(clippy::type_complexity)]
 
-use crate::resources::wave::Wave;
+use crate::resources::{
+    wave::Wave,
+    wave::CITY_INITIAL_INFECTION_RATE
+};
 
 use crate::components::{
     airplane::Airplane, city::City, infection_rate::InfectionRate, letter::Letter,
@@ -57,7 +60,7 @@ impl<'s> System<'s> for AirplaneLandSystem {
                         if !returning {
                             let new_rate = (city_infection_rate_comp.rate + infection_rate)
                                 .max(0)
-                                .min(10);
+                                .min(CITY_INITIAL_INFECTION_RATE);
 
                             if city_infection_rate_comp.rate != new_rate && new_rate == 0 {
                                 let waves = &mut world.write_resource::<Wave>();
@@ -87,14 +90,14 @@ impl<'s> System<'s> for AirplaneLandSystem {
                                 infection_display_entity,
                             );
 
-                        if city_infection_rate == 10 {
+                        if city_infection_rate == CITY_INITIAL_INFECTION_RATE {
                             visibility.0 = false;
                         } else {
                             visibility.0 = true;
 
                             let lives = city_infection_rate;
-                            let fraction = 9 - lives;
-                            let index = (fraction as f32 / 9.0 * 20.0) as i32;
+                            let fraction = CITY_INITIAL_INFECTION_RATE - 1 - lives;
+                            let index = (fraction as f32 / (CITY_INITIAL_INFECTION_RATE - 1) as f32 * 20.0) as i32;
 
                             if let Renderable::Image(img) = &mut renderable.0 {
                                 img.source = Some(Rect {
