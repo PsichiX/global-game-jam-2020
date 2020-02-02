@@ -43,7 +43,6 @@ impl State for GameState {
             .get(0)
             .expect("Could not get camera entity from scene instance");
 
-        let music_name = format!("audio://music/{}.ogg", self.music_name);
         let music_file_name = format!("music/{}.ogg", self.music_name);
         let config_name = format!("yaml://music/{}.yaml", self.music_name);
         world.read_resource::<LazyUpdate>().exec_mut(move |world| {

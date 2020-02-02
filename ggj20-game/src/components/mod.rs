@@ -5,6 +5,7 @@ pub mod airplane;
 pub mod city;
 pub mod infection_rate;
 pub mod letter;
+pub mod ui_element;
 
 #[derive(Debug, Default, Copy, Clone, Serialize, Deserialize)]
 pub struct MainCameraTag;

@@ -13,7 +13,7 @@ use crate::{
     systems::{
         airplane_land::AirplaneLandSystem, airplane_move::AirplaneMoveSystem,
         airplane_return::AirplaneReturnSystem, beat::BeatSystem, view::ViewSystem,
-        wave::WaveSystem,
+        wave::WaveSystem, ui::UiSystem,
     },
 };
 use oxygengine::prelude::*;
@@ -105,6 +105,7 @@ pub fn main_js() -> Result<(), JsValue> {
         .with_system(AirplaneMoveSystem::default(), "airplane_move", &[])
         .with_system(ViewSystem::default(), "view", &[])
         .with_system(BeatSystem::default(), "beat", &[])
+        .with_system(UiSystem::default(), "ui", &[])
         .build(LoadingState::default(), WebAppTimer::default());
 
     // Application run phase - spawn runner that ticks our app.
