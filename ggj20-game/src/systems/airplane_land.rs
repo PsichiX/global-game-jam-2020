@@ -55,8 +55,15 @@ impl<'s> System<'s> for AirplaneLandSystem {
 
                         // Update only if not returning to the original city
                         if !returning {
-                            city_infection_rate_comp.rate =
-                                (city_infection_rate_comp.rate + infection_rate).min(10000);
+                            let new_rate =
+                                (city_infection_rate_comp.rate + infection_rate).max(0).min(10);
+
+                            if city_infection_rate_comp.rate != new_rate && new_rate == 0 {
+                                let waves = &mut world.write_resource::<Wave>();
+                                waves.score = (waves.score - 100).max(0);
+                            }
+
+                            city_infection_rate_comp.rate = new_rate;
                         }
 
                         city_infection_rate_comp.rate
@@ -75,17 +82,25 @@ impl<'s> System<'s> for AirplaneLandSystem {
                     if let Some(infection_display_entity) = infection_display_entity {
                         let (mut renderable, mut visibility) = <(CompositeRenderable, CompositeVisibility)>::fetch(world, infection_display_entity);
 
-                        visibility.0 = true;
 
-                        let index = 0;
+                        if city_infection_rate == 10 {
+                            visibility.0 = false;
+                        }
+                        else {
+                            visibility.0 = true;
 
-                        if let Renderable::Image(img) = &mut renderable.0 {
-                            img.source = Some(Rect {
-                                x: (index % 5) as f32 * 400.0,
-                                y: (index / 5) as f32 * 400.0,
-                                w: 400.0,
-                                h: 400.0
-                            });
+                            let lives = city_infection_rate;
+                            let fraction = 9 - lives;
+                            let index = (fraction as f32 / 9.0 * 20.0) as i32;
+
+                            if let Renderable::Image(img) = &mut renderable.0 {
+                                img.source = Some(Rect {
+                                    x: (index % 5) as f32 * 400.0,
+                                    y: (index / 5) as f32 * 400.0,
+                                    w: 400.0,
+                                    h: 400.0
+                                });
+                            }
                         }
                     }
                 }

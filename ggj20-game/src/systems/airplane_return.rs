@@ -103,6 +103,8 @@ impl<'s> System<'s> for AirplaneReturnSystem {
                 return;
             }
 
+            waves.score += waves.get_combo_multiplier();
+
             lazy_update.exec(move |world| {
                 for entity in airplaines_letters_to_hide {
                     let mut visibility = <CompositeVisibility>::fetch(world, entity);

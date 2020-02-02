@@ -5,7 +5,8 @@ entities:
       components:
         Tag: world
         City: {}
-        InfectionRate: {}
+        InfectionRate:
+          rate: 10
         CompositeRenderable:
           Image:
             image: images/white_city.png
