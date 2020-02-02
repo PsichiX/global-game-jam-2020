@@ -11,6 +11,7 @@ use oxygengine::prelude::*;
 pub struct WaveSystem {
     music_time: f64,
     city: i32,
+    nth_beat: i32
 }
 
 impl<'s> System<'s> for WaveSystem {
@@ -55,13 +56,16 @@ impl<'s> System<'s> for WaveSystem {
         // if self.music_time > waves.airplane_interval {
         //     self.music_time -= waves.airplane_interval;
 
-        if beat.pulse() {
+        self.nth_beat += 1;
+
+        if beat.pulse() && self.nth_beat % waves.plane_spawning_every_beats == 0 {
+            self.nth_beat = 0;
             self.city += 1;
 
             let cities = (&entities, &cities, &transforms, &infection_rates)
                 .join()
                 .filter(|(_, city, _, _)| match city.levels_range {
-                    Some(r) => waves.current_level >= r.0 && waves.current_level <= r.1,
+                    Some(r) => waves.current_level as usize >= r.0 && waves.current_level as usize <= r.1,
                     None => false,
                 })
                 .collect::<Vec<_>>();
@@ -116,6 +120,8 @@ impl<'s> System<'s> for WaveSystem {
                 break;
             }
 
+            waves.current_start_letter =  (waves.current_start_letter + 1) % waves.available_letters;
+
             let letter_ascii = match letter_ascii {
                 Some(c) => c,
                 None => {
@@ -139,6 +145,7 @@ impl<'s> System<'s> for WaveSystem {
             let city_index = self.city;
             let airplane_entity = airplane_entities[0];
             let airplane_letter_entity = airplane_entities[1];
+            let airplane_speed = waves.airplane_speed;
 
             lazy_update.exec(move |world| {
                 {
@@ -163,7 +170,7 @@ impl<'s> System<'s> for WaveSystem {
                     airplane.end_pos = city_end.get_translation();
                     airplane.phase = 0.0;
                     airplane.tween = Some(Tween::new(TweenType::Cubic, EaseType::InOut));
-                    airplane.speed = 0.05;
+                    airplane.speed = airplane_speed;
                     airplane.destination_city = Some(city_entity);
                     airplane.letter_display = Some(airplane_letter_entity);
                 }

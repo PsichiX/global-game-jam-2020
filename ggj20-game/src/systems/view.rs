@@ -26,7 +26,7 @@ impl<'s> System<'s> for ViewSystem {
             .join()
             .filter_map(|(entity, city)| {
                 if let Some(levels_range) = city.levels_range {
-                    if wave.current_level >= levels_range.0 && wave.current_level <= levels_range.1
+                    if wave.current_level as usize >= levels_range.0 && wave.current_level as usize <= levels_range.1
                     {
                         return Some(entity);
                     }
@@ -43,7 +43,7 @@ impl<'s> System<'s> for ViewSystem {
             .collect::<Vec<_>>();
 
         if let Some(bbox) = Rect::bounding(&points) {
-            let bbox = bbox.expand(64.0);
+            let bbox = bbox.expand(320.0);
             let center = bbox.center();
 
             for (_, transform) in (&main_cameras, &mut transforms).join() {

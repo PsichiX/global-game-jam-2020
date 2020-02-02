@@ -5,6 +5,7 @@ use serde::{Deserialize, Serialize};
 pub struct Beat {
     pub title: String,
     pub bpm: usize,
+    pub duration: usize,
     #[serde(default)]
     pub base_offset_seconds: f64,
     #[serde(default = "Beat::default_speed")]
@@ -22,6 +23,10 @@ impl Beat {
 
     pub fn current_time_seconds(&self) -> f64 {
         self.current_time_seconds
+    }
+
+    pub fn progress(&self) -> f32 {
+        (self.current_time_seconds as f32 / self.duration as f32).max(0.0).min(1.0)
     }
 
     pub fn beat_duration(&self) -> f64 {
