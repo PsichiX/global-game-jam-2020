@@ -83,7 +83,7 @@ impl State for LoadingState {
                     // NOTE: web browsers require user input to be triggered before playing any audio.
                     if input.trigger_or_default("mouse-left") == TriggerState::Pressed {
                         return StateChange::Swap(Box::new(GameState::new(
-                            "surf-shimmy".to_owned(),
+                            "werq".to_owned(),
                         )));
                     }
                 }

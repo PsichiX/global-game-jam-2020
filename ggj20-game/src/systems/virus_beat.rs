@@ -38,13 +38,17 @@ impl<'s> System<'s> for VirusBeatSystem {
             self.anim = (self.anim - (lifecycle.delta_time_seconds() * 1000.0) as i32).max(0);
 
             if beat.is_sync_with_beat(BEAT_THRESHOLD) {
-                if !self.beat_done  {
+                if !self.beat_done {
                     self.anim = 500;
                 }
 
                 self.beat_done = true;
 
-                let factor = if self.anim > 250 { 1.0 - (self.anim as f32 - 250.0) / 250.0 } else { self.anim as f32 / 250.0 };
+                let factor = if self.anim > 250 {
+                    1.0 - (self.anim as f32 - 250.0) / 250.0
+                } else {
+                    self.anim as f32 / 250.0
+                };
 
                 ui_element.scale = (1.0 + factor * 0.5).into();
                 // ui_element.scale = 1.5.into();
