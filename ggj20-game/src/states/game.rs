@@ -94,20 +94,6 @@ impl State for GameState {
     }
 
     fn on_process(&mut self, world: &mut World) -> StateChange {
-        {
-            let input = &world.read_resource::<InputController>();
-            if input.trigger_or_default("key-a").is_pressed() {
-                world.write_resource::<Wave>().current_level += 1;
-            } else {
-                if input.trigger_or_default("key-d").is_pressed() {
-                    let wave = &mut world.write_resource::<Wave>();
-                    if wave.current_level > 0 {
-                        wave.current_level -= 1;
-                    }
-                }
-            }
-        }
-
         let command = std::mem::replace(&mut self.command, Command::None);
         match command {
             Command::PrepareData => {

@@ -2,7 +2,10 @@
 
 use crate::{
     components::{ui_element::*, VirusTag},
-    resources::beat::Beat,
+    resources::{
+        beat::Beat,
+        wave::BEAT_THRESHOLD
+    }
 };
 use oxygengine::prelude::*;
 
@@ -10,6 +13,8 @@ use oxygengine::prelude::*;
 pub struct VirusBeatSystem {
     // NOTE: don't put that here.
     beat: usize,
+    anim: i32,
+    beat_done: bool
 }
 
 impl<'s> System<'s> for VirusBeatSystem {
@@ -17,9 +22,10 @@ impl<'s> System<'s> for VirusBeatSystem {
         Read<'s, Beat>,
         ReadStorage<'s, VirusTag>,
         WriteStorage<'s, UiElement>,
+        ReadExpect<'s, AppLifeCycle>,
     );
 
-    fn run(&mut self, (beat, viruses, mut ui_elements): Self::SystemData) {
+    fn run(&mut self, (beat, viruses, mut ui_elements, lifecycle): Self::SystemData) {
         for (virus, ui_element) in (&viruses, &mut ui_elements).join() {
             if beat.pulse() {
                 // NOTE: don't make that like that
@@ -31,11 +37,28 @@ impl<'s> System<'s> for VirusBeatSystem {
                 }
                 ui_element.rebuild();
             }
-            if beat.is_sync_with_beat(0.1) {
+
+            // self.anim -= ((lifecycle.delta_time_seconds() * 1000.0) as i32).max(0);
+
+            if beat.is_sync_with_beat(BEAT_THRESHOLD) && !self.beat_done {
+                // self.beat_done = true;
+
+                // if self.anim == 0 {
+                //     self.anim = 300;
+                // }
+
+                // let factor = if self.anim > 150 { 1.0 - (self.anim as f32 - 150.0) / 150.0 } else { self.anim as f32 / 150.0 };
+
+                // ui_element.scale = (1.0 + factor * 0.5).into();
                 ui_element.scale = 1.5.into();
-            } else {
+            }
+
+            if !beat.is_sync_with_beat(BEAT_THRESHOLD) {
+                // self.beat_done = false;
+
                 ui_element.scale = 1.0.into();
             }
+
             ui_element.rebuild();
         }
     }
