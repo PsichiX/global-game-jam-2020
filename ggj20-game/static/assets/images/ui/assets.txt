@@ -1,6 +1,4 @@
 png://images/ui/down_ui.png
-png://images/ui/up_ui.png
-png://images/ui/up_ui_smaller.png
 png://images/ui/combo_stripe.png
 png://images/ui/combo_stripe_filling.png
 png://images/ui/coin_icon.png

@@ -28,7 +28,17 @@ impl<'s> System<'s> for WaveSystem {
 
     fn run(
         &mut self,
-        (entities, lazy_update, lifecycle, mut waves, mut prefabs, cities, infection_rates, transforms, beat): Self::SystemData,
+        (
+            entities,
+            lazy_update,
+            lifecycle,
+            mut waves,
+            mut prefabs,
+            cities,
+            infection_rates,
+            transforms,
+            beat,
+        ): Self::SystemData,
     ) {
         if waves.is_paused {
             return;

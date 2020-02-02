@@ -24,34 +24,34 @@ impl<'s> System<'s> for UiSystem {
     ) {
         let screen_size = renderer.view_size();
         let force_update = (self.last_screen_size - screen_size).sqr_magnitude() > 1.0e-4;
+        self.last_screen_size = screen_size;
 
         for (mut ui_element, mut renderable) in (&mut ui_elements, &mut renderables).join() {
-            if !ui_element.dirty && !force_update {
-                continue;
-            }
-            if let Some(rect) = (&cameras, &names, &transforms)
-                .join()
-                .find_map(|(c, n, t)| {
-                    if ui_element.camera_name == n.0 {
-                        if let Some(inv_mat) = !c.view_matrix(t, screen_size) {
-                            let size = screen_size * inv_mat;
-                            Some(Rect {
-                                x: 0.0,
-                                y: 0.0,
-                                w: size.x,
-                                h: size.y,
-                            })
+            if ui_element.dirty || force_update {
+                if let Some(rect) = (&cameras, &names, &transforms)
+                    .join()
+                    .find_map(|(c, n, t)| {
+                        if ui_element.camera_name == n.0 {
+                            if let Some(inv_mat) = !c.view_matrix(t, screen_size) {
+                                let size = screen_size * inv_mat;
+                                Some(Rect {
+                                    x: 0.0,
+                                    y: 0.0,
+                                    w: size.x,
+                                    h: size.y,
+                                })
+                            } else {
+                                None
+                            }
                         } else {
                             None
                         }
-                    } else {
-                        None
-                    }
-                })
-            {
-                let commands = ui_element.build_commands(rect);
-                renderable.0 = Renderable::Commands(commands);
-                ui_element.dirty = false;
+                    })
+                {
+                    let commands = ui_element.build_commands(rect);
+                    renderable.0 = Renderable::Commands(commands);
+                    ui_element.dirty = false;
+                }
             }
         }
     }

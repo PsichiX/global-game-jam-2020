@@ -20,6 +20,7 @@ entities:
   - Data:
       components:
         Name: camera_ui
+        CompositeRenderLayer: 1
         CompositeCamera:
           scaling: Aspect
           tags:
@@ -189,41 +190,6 @@ entities:
         CompositeRenderable: None
         CompositeTransform: {}
         CompositeRenderLayer: 1
-        CompositeRenderDepth: 1
-        UiElement:
-          camera_name: camera_ui
-          element_type:
-            Image:
-              image:
-                Single: images/ui/up_ui_smaller.png
-              source_rect:
-                x: 0
-                y: 0
-                w: 1018
-                h: 118
-          margin:
-            left: 20
-            right: 20
-            top: 20
-            bottom: 20
-          horizontal_anchor:
-            Parent:
-              - PercentageLength: 0
-              - PercentageLength: 0
-          vertical_anchor:
-            Parent:
-              - PercentageLength: 0.68
-              - PercentageLength: 0.25
-          offset:
-            x: 0
-            y: 15
-        NonPersistent: ~
-  - Data:
-      components:
-        Tag: ui
-        CompositeRenderable: None
-        CompositeTransform: {}
-        CompositeRenderLayer: 1
         CompositeRenderDepth: 0
         UiElement:
           camera_name: camera_ui
@@ -249,7 +215,7 @@ entities:
             y: 1
           offset:
             x: 10
-            y: 0
+            y: 20
           fixed_width: 250
           fixed_height: 250
         NonPersistent: ~
@@ -283,8 +249,8 @@ entities:
             x: 0.5
             y: 0.5
           offset:
-            x: -75
-            y: -115
+            x: -90
+            y: -80
           fixed_width: 150
           fixed_height: 150
         VirusTag: ~

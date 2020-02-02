@@ -1,0 +1,4 @@
+png://splash/cookie.png
+png://splash/tap_to_start.png
+png://splash/loading.png
+prefab://splash/loading.yaml

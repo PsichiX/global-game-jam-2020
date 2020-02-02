@@ -55,8 +55,9 @@ impl<'s> System<'s> for AirplaneLandSystem {
 
                         // Update only if not returning to the original city
                         if !returning {
-                            let new_rate =
-                                (city_infection_rate_comp.rate + infection_rate).max(0).min(10);
+                            let new_rate = (city_infection_rate_comp.rate + infection_rate)
+                                .max(0)
+                                .min(10);
 
                             if city_infection_rate_comp.rate != new_rate && new_rate == 0 {
                                 let waves = &mut world.write_resource::<Wave>();
@@ -80,13 +81,15 @@ impl<'s> System<'s> for AirplaneLandSystem {
 
                     // Update the city looks
                     if let Some(infection_display_entity) = infection_display_entity {
-                        let (mut renderable, mut visibility) = <(CompositeRenderable, CompositeVisibility)>::fetch(world, infection_display_entity);
-
+                        let (mut renderable, mut visibility) =
+                            <(CompositeRenderable, CompositeVisibility)>::fetch(
+                                world,
+                                infection_display_entity,
+                            );
 
                         if city_infection_rate == 10 {
                             visibility.0 = false;
-                        }
-                        else {
+                        } else {
                             visibility.0 = true;
 
                             let lives = city_infection_rate;
@@ -98,7 +101,7 @@ impl<'s> System<'s> for AirplaneLandSystem {
                                     x: (index % 5) as f32 * 400.0,
                                     y: (index / 5) as f32 * 400.0,
                                     w: 400.0,
-                                    h: 400.0
+                                    h: 400.0,
                                 });
                             }
                         }

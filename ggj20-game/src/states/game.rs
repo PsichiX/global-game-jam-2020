@@ -66,7 +66,7 @@ impl State for GameState {
 
             *world.write_resource::<Beat>() = config;
             *<AudioSource>::fetch(world, camera_entity) =
-                AudioSource::new_play(music_file_name.into(), true, true);
+                AudioSource::new_complex(music_file_name.into(), true, true, 1.0, 1.0, true);
         });
 
         self.command = Command::PrepareData;
