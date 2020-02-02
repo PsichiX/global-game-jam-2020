@@ -1,6 +1,6 @@
 use crate::{
     assets::tiled_map_asset_protocol::TiledMapAsset,
-    components::city::City,
+    components::{city::City, ui_element::*},
     resources::{beat::Beat, wave::Wave},
 };
 use oxygengine::prelude::*;
@@ -42,6 +42,27 @@ impl State for GameState {
             .expect("Could not instantiate scene")
             .get(0)
             .expect("Could not get camera entity from scene instance");
+
+        for i in 1..=25 {
+            let entity = *world
+                .write_resource::<PrefabManager>()
+                .instantiate_world("card", world)
+                .expect("Could not instantiate card")
+                .get(0)
+                .expect("Could not get card entity from scene instance");
+
+            world.read_resource::<LazyUpdate>().exec_mut(move |world| {
+                let mut ui_element_storage = world.write_storage::<UiElement>();
+                let mut ui_element = ui_element_storage
+                    .get_mut(entity)
+                    .expect("Could not get card UI element");
+                ui_element.alignment.x = -(i - 1) as f32;
+                if let UiElementType::Image(image) = &mut ui_element.element_type {
+                    image.image = UiImagePath::Single(format!("images/progress/{}.png", i));
+                }
+                ui_element.rebuild();
+            });
+        }
 
         let music_file_name = format!("music/{}.ogg", self.music_name);
         let config_name = format!("yaml://music/{}.yaml", self.music_name);

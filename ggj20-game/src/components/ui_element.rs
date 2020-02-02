@@ -170,8 +170,8 @@ impl UiElement {
                 } else {
                     width
                 } * self.scale.x;
-                let height = if let Some(w) = self.fixed_width {
-                    w
+                let height = if let Some(h) = self.fixed_height {
+                    h
                 } else {
                     height
                 } * self.scale.y;

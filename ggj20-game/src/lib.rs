@@ -5,17 +5,17 @@ use crate::{
     assets::tiled_map_asset_protocol::TiledMapAssetProtocol,
     components::{
         airplane::Airplane, city::City, fade_out::FadeOut, infection_rate::InfectionRate,
-        letter::Letter, ui_element::UiElement, ComboLeftNumberTag, ComboMissTag, ComboProgressTag,
-        ComboRightNumberTag, MainCameraTag, MenuTrackSelectedTag, VirusTag,
+        letter::Letter, ui_element::UiElement, CardTag, ComboLeftNumberTag, ComboMissTag,
+        ComboProgressTag, ComboRightNumberTag, MainCameraTag, MenuTrackSelectedTag, VirusTag,
     },
     resources::wave::Wave,
     states::loading::LoadingState,
     // systems::keyboard_movement::KeyboardMovementSystem,
     systems::{
         airplane_land::AirplaneLandSystem, airplane_move::AirplaneMoveSystem,
-        airplane_return::AirplaneReturnSystem, beat::BeatSystem, combo::ComboSystem,
-        fade_out::FadeOutSystem, ui::UiSystem, view::ViewSystem, virus_beat::VirusBeatSystem,
-        wave::WaveSystem,
+        airplane_return::AirplaneReturnSystem, beat::BeatSystem, cards::CardsSystem,
+        combo::ComboSystem, fade_out::FadeOutSystem, ui::UiSystem, view::ViewSystem,
+        virus_beat::VirusBeatSystem, wave::WaveSystem,
     },
 };
 use oxygengine::prelude::*;
@@ -77,6 +77,7 @@ pub fn main_js() -> Result<(), JsValue> {
             prefabs.register_component_factory::<ComboLeftNumberTag>("ComboLeftNumberTag");
             prefabs.register_component_factory::<ComboMissTag>("ComboMissTag");
             prefabs.register_component_factory::<FadeOut>("FadeOut");
+            prefabs.register_component_factory::<CardTag>("CardTag");
         })
         // install input managment.
         .with_bundle(oxygengine::input::bundle_installer, |input| {
@@ -118,6 +119,7 @@ pub fn main_js() -> Result<(), JsValue> {
         .with_system(VirusBeatSystem::default(), "virus_beat", &[])
         .with_system(ComboSystem::default(), "combo_beat", &[])
         .with_system(FadeOutSystem::default(), "fade_out_system", &[])
+        .with_system(CardsSystem::default(), "cards", &[])
         .build(LoadingState::default(), WebAppTimer::default());
 
     // Application run phase - spawn runner that ticks our app.

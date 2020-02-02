@@ -181,8 +181,12 @@ entities:
               - PercentageLength: 0
           vertical_anchor:
             Parent:
-              - PercentageLength: 0.75
+              - PercentageLength: 1
               - PercentageLength: 0
+          fixed_height: 250
+          alignment:
+            x: 0
+            y: 1
         NonPersistent: ~
   - Data:
       components:
@@ -208,14 +212,14 @@ entities:
               - PercentageLength: 0
           vertical_anchor:
             Parent:
-              - PercentageLength: 0.75
-              - PercentageLength: 0.25
+              - PercentageLength: 1
+              - PercentageLength: 0
           alignment:
             x: 1
             y: 1
           offset:
             x: 10
-            y: 20
+            y: -180
           fixed_width: 250
           fixed_height: 250
         NonPersistent: ~
@@ -243,50 +247,15 @@ entities:
               - PercentageLength: 0
           vertical_anchor:
             Parent:
-              - PercentageLength: 0.75
-              - PercentageLength: 0.25
+              - PercentageLength: 1
+              - PercentageLength: 0
           alignment:
             x: 0.5
             y: 0.5
           offset:
             x: -90
-            y: -80
+            y: -290
           fixed_width: 150
           fixed_height: 150
         VirusTag: ~
-        NonPersistent: ~
-  - Data:
-      components:
-        Tag: ui
-        CompositeRenderable: None
-        CompositeTransform: {}
-        CompositeRenderLayer: 1
-        CompositeRenderDepth: 50
-        UiElement:
-          camera_name: camera_ui
-          element_type:
-            Image:
-              image:
-                Single: images/progress/1.png
-              source_rect:
-                x: 0
-                y: 0
-                w: 600
-                h: 600
-          horizontal_anchor:
-            Parent:
-              - PercentageLength: 0
-              - PercentageLength: 1
-          vertical_anchor:
-            Parent:
-              - PercentageLength: 1
-              - PercentageLength: 0
-          alignment:
-            x: 0
-            y: 1
-          offset:
-            x: 30
-            y: -30
-          fixed_width: 200
-          fixed_height: 200
         NonPersistent: ~
