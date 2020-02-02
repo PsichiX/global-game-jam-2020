@@ -1,8 +1,8 @@
 #![allow(clippy::type_complexity)]
 
 use crate::{
-    components::{city::City, MainCameraTag},
-    resources::{beat::Beat, wave::Wave},
+    components::{MainCameraTag},
+    resources::{beat::Beat},
 };
 use oxygengine::prelude::*;
 

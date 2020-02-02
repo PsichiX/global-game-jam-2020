@@ -2,7 +2,7 @@
 
 use crate::components::{
     airplane::Airplane,
-    letter::Letter, MainCameraTag,
+    letter::Letter,
     infection_rate::InfectionRate
 };
 use crate::resources::{
@@ -62,7 +62,7 @@ impl<'s> System<'s> for AirplaneReturnSystem {
                             airplaines_letters_to_hide.push(disp);
                         }
 
-                        if (infection_rate.rate == 0) {
+                        if infection_rate.rate == 0 {
                             // TODO: Give combo penalty when the player misses a key
                             info!("bad infection_rate");
                             waves.combo = 0;

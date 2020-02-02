@@ -51,6 +51,6 @@ impl Wave {
     }
 
     pub fn get_combo_multiplier(&self) -> i32 {
-        self.combo / COMBO_STEP
+        (self.combo / COMBO_STEP).max(1)
     }
 }

@@ -6,3 +6,4 @@ pub mod view;
 pub mod wave;
 pub mod virus_beat;
 pub mod combo;
+pub mod fade_out;

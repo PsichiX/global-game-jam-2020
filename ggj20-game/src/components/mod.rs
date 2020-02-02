@@ -5,6 +5,7 @@ pub mod airplane;
 pub mod city;
 pub mod infection_rate;
 pub mod letter;
+pub mod fade_out;
 
 #[derive(Debug, Default, Copy, Clone, Serialize, Deserialize)]
 pub struct MainCameraTag;
@@ -67,3 +68,12 @@ impl Component for ComboRightNumberTag {
 impl Prefab for ComboRightNumberTag {}
 impl PrefabComponent for ComboRightNumberTag {}
 
+#[derive(Debug, Default, Copy, Clone, Serialize, Deserialize)]
+pub struct ComboMissTag;
+
+impl Component for ComboMissTag {
+    type Storage = VecStorage<Self>;
+}
+
+impl Prefab for ComboMissTag {}
+impl PrefabComponent for ComboMissTag {}
