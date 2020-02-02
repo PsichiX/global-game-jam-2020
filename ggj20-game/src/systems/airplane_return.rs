@@ -3,7 +3,9 @@
 use crate::components::{
     airplane::Airplane,
     letter::Letter,
-    infection_rate::InfectionRate
+    infection_rate::InfectionRate,
+    fade_out::FadeOut,
+    ComboMissTag
 };
 use crate::resources::{
     wave::Wave,
@@ -25,13 +27,15 @@ impl<'s> System<'s> for AirplaneReturnSystem {
         WriteStorage<'s, Airplane>,
         WriteStorage<'s, Letter>,
         WriteStorage<'s, InfectionRate>,
+        WriteStorage<'s, FadeOut>,
+        ReadStorage<'s, ComboMissTag>,
         Read<'s, LazyUpdate>,
         Read<'s, Beat>,
     );
 
     fn run(
         &mut self,
-        (mut waves, input, mut airplanes, mut letters, infection_rates, lazy_update, beat): Self::SystemData,
+        (mut waves, input, mut airplanes, mut letters, infection_rates, mut fade_outs, miss_tags, lazy_update, beat): Self::SystemData,
     ) {
         if beat.is_sync_with_beat(0.1) && !self.beat_key_pressed {
             self.combo_decreased = false;
@@ -63,8 +67,12 @@ impl<'s> System<'s> for AirplaneReturnSystem {
                         }
 
                         if infection_rate.rate == 0 {
-                            // TODO: Give combo penalty when the player misses a key
                             info!("bad infection_rate");
+
+                            for (miss_tag, fade_out) in (&miss_tags, &mut fade_outs).join() {
+                                fade_out.time = fade_out.max_time;
+                            }
+
                             waves.combo = 0;
                         }
                         else {
@@ -77,14 +85,21 @@ impl<'s> System<'s> for AirplaneReturnSystem {
             }
 
             if !self.beat_key_pressed {
+                self.beat_key_pressed = false;
                 return;
             }
 
             if airplaines_letters_to_hide.is_empty() {
                 // TODO: Give combo penalty when the player misses a key
                 info!("empty airplanes");
+
+                for (miss_tag, fade_out) in (&miss_tags, &mut fade_outs).join() {
+                    fade_out.time = fade_out.max_time;
+                }
+
                 waves.combo = 0;
 
+                self.beat_key_pressed = false;
                 return;
             }
 
@@ -94,6 +109,31 @@ impl<'s> System<'s> for AirplaneReturnSystem {
                     visibility.0 = false;
                 }
             });
+        }
+
+        let mut key_pressed = false;
+
+        for c in b'a'..=b'z' {
+            let letter = c as char;
+            let key = format!("key-{}", letter);
+
+            if !input.trigger_or_default(&key[..]).is_pressed() {
+                continue;
+            }
+
+            key_pressed = true;
+        }
+
+        if !beat.is_sync_with_beat(0.1) && key_pressed {
+            info!("miss the beat");
+
+            for (miss_tag, fade_out) in (&miss_tags, &mut fade_outs).join() {
+                fade_out.time = fade_out.max_time;
+            }
+
+            waves.combo = 0;
+
+            return;
         }
 
         if !beat.is_sync_with_beat(0.1) && !self.combo_decreased {

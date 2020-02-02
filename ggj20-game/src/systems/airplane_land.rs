@@ -73,26 +73,20 @@ impl<'s> System<'s> for AirplaneLandSystem {
 
                     // Update the city looks
                     if let Some(infection_display_entity) = infection_display_entity {
-                        let renderable_storage = &mut world.write_storage::<CompositeRenderable>();
-                        let mut renderable = renderable_storage
-                            .get_mut(infection_display_entity)
-                            .expect("");
+                        let (mut renderable, mut visibility) = <(CompositeRenderable, CompositeVisibility)>::fetch(world, infection_display_entity);
 
-                        renderable.0 = Renderable::Path(Path {
-                            color: Color {
-                                r: (((city_infection_rate as f32) / 1000.00) * 255.0).min(1.0)
-                                    as u8,
-                                g: 0,
-                                b: 0,
-                                a: 255,
-                            },
-                            elements: vec![PathElement::Rectangle(Rect {
-                                x: -50.0,
-                                y: -50.0,
-                                w: 100.0,
-                                h: 100.0,
-                            })],
-                        });
+                        visibility.0 = true;
+
+                        let index = 0;
+
+                        if let Renderable::Image(img) = &mut renderable.0 {
+                            img.source = Some(Rect {
+                                x: (index % 5) as f32 * 400.0,
+                                y: (index / 5) as f32 * 400.0,
+                                w: 400.0,
+                                h: 400.0
+                            });
+                        }
                     }
                 }
 

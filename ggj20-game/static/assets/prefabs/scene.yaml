@@ -131,16 +131,17 @@ entities:
       components:
         Tag: ui
         CompositeRenderLayer: 1
+        ComboMissTag: ~
         FadeOut:
-          time: 5
-          max_time: 5
+          time: 0
+          max_time: 1
         CompositeVisibility: true
         CompositeCameraAlignment:
           x: 0.5
           y: 1
         CompositeRenderable:
           Commands:
-            - Alpha: 1.0
+            - Alpha: 0.0
             - Draw:
                 Image:
                   image: images/texts/miss.png
