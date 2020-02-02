@@ -9,7 +9,9 @@ pub struct LoadingState {
 impl State for LoadingState {
     fn on_enter(&mut self, world: &mut World) {
         let assets = &mut world.write_resource::<AssetsDatabase>();
-        assets.load("set://assets.txt").expect("Could not start load assets");
+        assets
+            .load("set://assets.txt")
+            .expect("Could not start load assets");
     }
 
     fn on_process(&mut self, world: &mut World) -> StateChange {

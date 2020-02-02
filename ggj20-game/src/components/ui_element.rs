@@ -87,7 +87,7 @@ impl Default for UiElementType {
 #[derive(Debug, Clone, Default, Serialize, Deserialize)]
 pub struct UiElement {
     #[serde(default)]
-    pub camera_tag: String,
+    pub camera_name: String,
     #[serde(default)]
     pub element_type: UiElementType,
     #[serde(default)]
@@ -96,8 +96,10 @@ pub struct UiElement {
     pub horizontal_anchor: UiAnchor,
     #[serde(default)]
     pub vertical_anchor: UiAnchor,
+    #[serde(default)]
+    pub alignment: Vec2,
     #[serde(skip)]
-    dirty: bool,
+    pub(crate) dirty: bool,
 }
 
 impl UiElement {
@@ -110,7 +112,11 @@ impl Component for UiElement {
     type Storage = VecStorage<Self>;
 }
 
-impl Prefab for UiElement {}
+impl Prefab for UiElement {
+    fn post_from_prefab(&mut self) {
+        self.dirty = true;
+    }
+}
 impl PrefabComponent for UiElement {}
 
 impl UiElement {
@@ -148,8 +154,8 @@ impl UiElement {
                     }
                 };
                 Rect {
-                    x: x + parent_rect.x,
-                    y: y + parent_rect.y,
+                    x: x + parent_rect.x - self.alignment.x * width,
+                    y: y + parent_rect.y - self.alignment.y * height,
                     w: width,
                     h: height,
                 }

@@ -5,15 +5,15 @@ use crate::{
     assets::tiled_map_asset_protocol::TiledMapAssetProtocol,
     components::{
         airplane::Airplane, city::City, infection_rate::InfectionRate, letter::Letter,
-        MainCameraTag, MenuTrackSelectedTag,
+        ui_element::UiElement, MainCameraTag, MenuTrackSelectedTag,
     },
     resources::wave::Wave,
     states::loading::LoadingState,
     // systems::keyboard_movement::KeyboardMovementSystem,
     systems::{
         airplane_land::AirplaneLandSystem, airplane_move::AirplaneMoveSystem,
-        airplane_return::AirplaneReturnSystem, beat::BeatSystem, view::ViewSystem,
-        wave::WaveSystem, ui::UiSystem,
+        airplane_return::AirplaneReturnSystem, beat::BeatSystem, ui::UiSystem, view::ViewSystem,
+        wave::WaveSystem,
     },
 };
 use oxygengine::prelude::*;
@@ -68,6 +68,7 @@ pub fn main_js() -> Result<(), JsValue> {
             prefabs.register_component_factory::<MainCameraTag>("MainCameraTag");
             prefabs.register_component_factory::<MenuTrackSelectedTag>("MenuTrackSelectedTag");
             prefabs.register_component_factory::<Letter>("Letter");
+            prefabs.register_component_factory::<UiElement>("UiElement");
         })
         // install input managment.
         .with_bundle(oxygengine::input::bundle_installer, |input| {

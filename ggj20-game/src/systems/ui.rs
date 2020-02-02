@@ -9,25 +9,28 @@ pub struct UiSystem;
 impl<'s> System<'s> for UiSystem {
     type SystemData = (
         ReadExpect<'s, WebCompositeRenderer>,
-        ReadStorage<'s, UiElement>,
+        WriteStorage<'s, UiElement>,
         WriteStorage<'s, CompositeRenderable>,
         ReadStorage<'s, CompositeCamera>,
         ReadStorage<'s, CompositeTransform>,
-        ReadStorage<'s, Tag>,
+        ReadStorage<'s, Name>,
     );
 
     fn run(
         &mut self,
-        (renderer, ui_elements, mut renderables, cameras, transforms, tags): Self::SystemData,
+        (renderer, mut ui_elements, mut renderables, cameras, transforms, names): Self::SystemData,
     ) {
         let screen_size = renderer.view_size();
 
-        for (ui_element, mut renderable) in (&ui_elements, &mut renderables).join() {
-            if let Some(rect) = (&cameras, &tags, &transforms)
+        for (mut ui_element, mut renderable) in (&mut ui_elements, &mut renderables).join() {
+            if !ui_element.dirty {
+                continue;
+            }
+            if let Some(rect) = (&cameras, &names, &transforms)
                 .join()
-                .find_map(|(c, tg, tr)| {
-                    if ui_element.camera_tag == tg.0 {
-                        if let Some(inv_mat) = !c.view_matrix(tr, screen_size) {
+                .find_map(|(c, n, t)| {
+                    if ui_element.camera_name == n.0 {
+                        if let Some(inv_mat) = !c.view_matrix(t, screen_size) {
                             let size = screen_size * inv_mat;
                             Some(Rect {
                                 x: 0.0,
@@ -45,6 +48,7 @@ impl<'s> System<'s> for UiSystem {
             {
                 let commands = ui_element.build_commands(rect);
                 renderable.0 = Renderable::Commands(commands);
+                ui_element.dirty = false;
             }
         }
     }
