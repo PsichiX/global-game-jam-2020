@@ -65,7 +65,6 @@ impl<'s> System<'s> for ViewSystem {
         };
 
         let factor = camera_scale.x / 600.0;
-        info!("factor: {}", factor);
 
         for (city, mut transform) in (&cities, &mut transforms).join() {
             transform.set_scale(Vec2 {
