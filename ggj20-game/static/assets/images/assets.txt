@@ -3,7 +3,17 @@ png://images/mask.png
 png://images/path.png
 png://images/heart.png
 png://images/red_airplane.png
-png://images/wirus.png
+png://images/0_virus.png
+png://images/1_virus.png
+png://images/2_virus.png
+png://images/3_virus.png
+png://images/4_virus.png
+png://images/5_virus.png
+png://images/6_virus.png
+png://images/7_virus.png
+png://images/8_virus.png
+png://images/9_virus.png
+png://images/10_virus.png
 png://images/white_airplane.png
 png://images/logo.png
 png://images/virus_light_1.png
@@ -19,3 +29,4 @@ png://images/green_loader.png
 set://images/letters/assets.txt
 set://images/texts/assets.txt
 set://images/ui/assets.txt
+set://images/progress/assets.txt
