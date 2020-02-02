@@ -9,6 +9,9 @@ pub const COMBO_DECREASE: i32 = 1;
 pub const MAX_COMBO: i32 = COMBO_STEP * COMBO_MAX_STEPS;
 pub const BEAT_THRESHOLD: f64 = 0.1;
 
+// !!! Do not forget to also change this value in city.yaml!
+pub const CITY_INITIAL_INFECTION_RATE: i32 = 7;
+
 #[derive(Debug, Clone)]
 pub enum Difficulty {
     Easy,
