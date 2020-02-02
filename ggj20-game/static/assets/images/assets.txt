@@ -30,3 +30,4 @@ png://images/right_part_info_stripe.png
 png://images/virus_light_3.png
 png://images/green_city.png
 set://images/letters/assets.txt
+set://images/texts/assets.txt

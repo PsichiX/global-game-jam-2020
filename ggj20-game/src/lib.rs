@@ -5,7 +5,8 @@ use crate::{
     assets::tiled_map_asset_protocol::TiledMapAssetProtocol,
     components::{
         airplane::Airplane, city::City, infection_rate::InfectionRate, letter::Letter,
-        MainCameraTag, MenuTrackSelectedTag,
+        MainCameraTag, MenuTrackSelectedTag, VirusTag, ComboProgressTag,
+        ComboLeftNumberTag, ComboRightNumberTag
     },
     resources::wave::Wave,
     states::loading::LoadingState,
@@ -13,7 +14,7 @@ use crate::{
     systems::{
         airplane_land::AirplaneLandSystem, airplane_move::AirplaneMoveSystem,
         airplane_return::AirplaneReturnSystem, beat::BeatSystem, view::ViewSystem,
-        wave::WaveSystem,
+        wave::WaveSystem, virus_beat::VirusBeatSystem, combo::ComboSystem
     },
 };
 use oxygengine::prelude::*;
@@ -68,6 +69,10 @@ pub fn main_js() -> Result<(), JsValue> {
             prefabs.register_component_factory::<MainCameraTag>("MainCameraTag");
             prefabs.register_component_factory::<MenuTrackSelectedTag>("MenuTrackSelectedTag");
             prefabs.register_component_factory::<Letter>("Letter");
+            prefabs.register_component_factory::<VirusTag>("VirusTag");
+            prefabs.register_component_factory::<ComboProgressTag>("ComboProgressTag");
+            prefabs.register_component_factory::<ComboRightNumberTag>("ComboRightNumberTag");
+            prefabs.register_component_factory::<ComboLeftNumberTag>("ComboLeftNumberTag");
         })
         // install input managment.
         .with_bundle(oxygengine::input::bundle_installer, |input| {
@@ -105,6 +110,8 @@ pub fn main_js() -> Result<(), JsValue> {
         .with_system(AirplaneMoveSystem::default(), "airplane_move", &[])
         .with_system(ViewSystem::default(), "view", &[])
         .with_system(BeatSystem::default(), "beat", &[])
+        .with_system(VirusBeatSystem::default(), "virus_beat", &[])
+        .with_system(ComboSystem::default(), "combo_beat", &[])
         .build(LoadingState::default(), WebAppTimer::default());
 
     // Application run phase - spawn runner that ticks our app.

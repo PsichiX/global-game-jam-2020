@@ -43,6 +43,93 @@ entities:
         Tag: ui
         CompositeRenderLayer: 1
         CompositeCameraAlignment:
+          x: 0.5
+          y: 0
+        CompositeRenderable:
+          Image:
+            image: images/texts/combo.png
+            destination:
+              x: -250
+              y: 40
+              w: 500
+              h: 250
+        CompositeTransform: {}
+        NonPersistent: ~
+  - Data:
+      components:
+        Tag: ui
+        CompositeRenderLayer: 1
+        CompositeCameraAlignment:
+          x: 0.5
+          y: 0
+        CompositeRenderable:
+          Image:
+            image: images/texts/1.png
+            destination:
+              x: -375
+              y: 0
+              w: 150
+              h: 150
+        CompositeTransform: {}
+        NonPersistent: ~
+  - Data:
+      components:
+        Tag: ui
+        CompositeRenderLayer: 1
+        CompositeRenderDepth: 1
+        CompositeCameraAlignment:
+          x: 0.5
+          y: 0
+        CompositeRenderable:
+          Image:
+            image: images/combo_stripe.png
+            destination:
+              x: -300
+              y: 0
+              w: 600
+              h: 150
+        CompositeTransform: {}
+        NonPersistent: ~
+  - Data:
+      components:
+        Tag: ui
+        CompositeRenderLayer: 1
+        ComboProgressTag: ~
+        CompositeCameraAlignment:
+          x: 0.5
+          y: 0
+        CompositeRenderable:
+          Image:
+            image: images/combo_stripe_filling.png
+            destination:
+              x: -300
+              y: 0
+              w: 600
+              h: 150
+        CompositeTransform: {}
+        NonPersistent: ~
+  - Data:
+      components:
+        Tag: ui
+        CompositeRenderLayer: 1
+        CompositeCameraAlignment:
+          x: 0.5
+          y: 0
+        CompositeRenderable:
+          Image:
+            image: images/texts/2.png
+            destination:
+              x: 225
+              y: 0
+              w: 150
+              h: 150
+        CompositeTransform: {}
+        NonPersistent: ~
+  - Data:
+      components:
+        Tag: ui
+        CompositeRenderLayer: 1
+        CompositeCameraAlignment:
           x: 0
           y: 1
         CompositeRenderable:
@@ -108,6 +195,7 @@ entities:
           translation:
             x: -75
             y: -250
+        VirusTag: ~
         NonPersistent: ~
   # - Data:
   #     components:

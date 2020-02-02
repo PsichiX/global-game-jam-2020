@@ -2,7 +2,10 @@
 
 use crate::{
     components::{airplane::Airplane, city::City, infection_rate::InfectionRate, letter::Letter},
-    resources::wave::Wave,
+    resources::{
+        wave::Wave,
+        beat::Beat
+    },
     utils::tween::*,
 };
 use oxygengine::prelude::*;
@@ -22,27 +25,29 @@ impl<'s> System<'s> for WaveSystem {
         Write<'s, PrefabManager>,
         ReadStorage<'s, City>,
         ReadStorage<'s, CompositeTransform>,
+        Read<'s, Beat>
     );
 
     fn run(
         &mut self,
-        (entities, lazy_update, lifecycle, mut waves, mut prefabs, cities, transforms): Self::SystemData,
+        (entities, lazy_update, lifecycle, mut waves, mut prefabs, cities, transforms, beat): Self::SystemData,
     ) {
         if waves.is_paused {
             return;
         }
 
-        let sec = lifecycle.delta_time_seconds();
+        // let sec = lifecycle.delta_time_seconds();
 
-        if sec > 1.0 {
-            return;
-        }
+        // if sec > 1.0 {
+        //     return;
+        // }
 
-        self.music_time += sec;
+        // self.music_time += sec;
 
-        if self.music_time > waves.airplane_interval {
-            self.music_time -= waves.airplane_interval;
+        // if self.music_time > waves.airplane_interval {
+        //     self.music_time -= waves.airplane_interval;
 
+        if beat.pulse() {
             self.city += 1;
 
             let cities = (&entities, &cities, &transforms)
