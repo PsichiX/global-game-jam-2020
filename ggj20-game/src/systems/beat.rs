@@ -1,9 +1,6 @@
 #![allow(clippy::type_complexity)]
 
-use crate::{
-    components::{MainCameraTag},
-    resources::{beat::Beat},
-};
+use crate::{components::MainCameraTag, resources::beat::Beat};
 use oxygengine::prelude::*;
 
 #[derive(Debug, Default)]

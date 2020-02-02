@@ -4,7 +4,9 @@ use crate::components::ui_element::UiElement;
 use oxygengine::prelude::*;
 
 #[derive(Debug, Default)]
-pub struct UiSystem;
+pub struct UiSystem {
+    last_screen_size: Vec2,
+}
 
 impl<'s> System<'s> for UiSystem {
     type SystemData = (
@@ -21,9 +23,10 @@ impl<'s> System<'s> for UiSystem {
         (renderer, mut ui_elements, mut renderables, cameras, transforms, names): Self::SystemData,
     ) {
         let screen_size = renderer.view_size();
+        let force_update = (self.last_screen_size - screen_size).sqr_magnitude() > 1.0e-4;
 
         for (mut ui_element, mut renderable) in (&mut ui_elements, &mut renderables).join() {
-            if !ui_element.dirty {
+            if !ui_element.dirty && !force_update {
                 continue;
             }
             if let Some(rect) = (&cameras, &names, &transforms)

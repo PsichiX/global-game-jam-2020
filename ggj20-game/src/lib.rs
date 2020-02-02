@@ -4,19 +4,18 @@ extern crate oxygengine;
 use crate::{
     assets::tiled_map_asset_protocol::TiledMapAssetProtocol,
     components::{
-        airplane::Airplane, city::City, infection_rate::InfectionRate, letter::Letter,
-        ui_element::UiElement, MainCameraTag, MenuTrackSelectedTag,
-        MainCameraTag, MenuTrackSelectedTag, VirusTag, ComboProgressTag,
-        ComboLeftNumberTag, ComboRightNumberTag, ComboMissTag, fade_out::FadeOut
+        airplane::Airplane, city::City, fade_out::FadeOut, infection_rate::InfectionRate,
+        letter::Letter, ui_element::UiElement, ComboLeftNumberTag, ComboMissTag, ComboProgressTag,
+        ComboRightNumberTag, MainCameraTag, MenuTrackSelectedTag, VirusTag,
     },
     resources::wave::Wave,
     states::loading::LoadingState,
     // systems::keyboard_movement::KeyboardMovementSystem,
     systems::{
         airplane_land::AirplaneLandSystem, airplane_move::AirplaneMoveSystem,
-        airplane_return::AirplaneReturnSystem, beat::BeatSystem, ui::UiSystem, view::ViewSystem,
-        wave::WaveSystem, virus_beat::VirusBeatSystem, combo::ComboSystem,
-        fade_out::FadeOutSystem
+        airplane_return::AirplaneReturnSystem, beat::BeatSystem, combo::ComboSystem,
+        fade_out::FadeOutSystem, ui::UiSystem, view::ViewSystem, virus_beat::VirusBeatSystem,
+        wave::WaveSystem,
     },
 };
 use oxygengine::prelude::*;

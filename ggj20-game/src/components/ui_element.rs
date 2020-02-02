@@ -98,11 +98,23 @@ pub struct UiElement {
     pub vertical_anchor: UiAnchor,
     #[serde(default)]
     pub alignment: Vec2,
+    #[serde(default)]
+    pub offset: Vec2,
+    #[serde(default)]
+    pub fixed_width: Option<f32>,
+    #[serde(default)]
+    pub fixed_height: Option<f32>,
+    #[serde(default = "UiElement::default_scale")]
+    pub scale: Vec2,
     #[serde(skip)]
     pub(crate) dirty: bool,
 }
 
 impl UiElement {
+    fn default_scale() -> Vec2 {
+        Vec2::one()
+    }
+
     pub fn rebuild(&mut self) {
         self.dirty = true;
     }
@@ -153,9 +165,19 @@ impl UiElement {
                         (f, (t - f).max(min_height))
                     }
                 };
+                let width = if let Some(w) = self.fixed_width {
+                    w
+                } else {
+                    width
+                } * self.scale.x;
+                let height = if let Some(w) = self.fixed_width {
+                    w
+                } else {
+                    height
+                } * self.scale.y;
                 Rect {
-                    x: x + parent_rect.x - self.alignment.x * width,
-                    y: y + parent_rect.y - self.alignment.y * height,
+                    x: self.offset.x + x + parent_rect.x - self.alignment.x * width,
+                    y: self.offset.y + y + parent_rect.y - self.alignment.y * height,
                     w: width,
                     h: height,
                 }

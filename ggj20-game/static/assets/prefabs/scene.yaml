@@ -20,9 +20,8 @@ entities:
   - Data:
       components:
         Name: camera_ui
-        MainCameraTag: ~
         CompositeCamera:
-          scaling: CenterAspect
+          scaling: Aspect
           tags:
             - ui
         CompositeTransform:
@@ -83,7 +82,7 @@ entities:
           y: 0
         CompositeRenderable:
           Image:
-            image: images/combo_stripe.png
+            image: images/ui/combo_stripe.png
             destination:
               x: -300
               y: 0
@@ -101,7 +100,7 @@ entities:
           y: 0
         CompositeRenderable:
           Image:
-            image: images/combo_stripe_filling.png
+            image: images/ui/combo_stripe_filling.png
             destination:
               x: -300
               y: 0
@@ -155,91 +154,138 @@ entities:
   - Data:
       components:
         Tag: ui
-        CompositeRenderLayer: 1
-        CompositeCameraAlignment:
-          x: 0
-          y: 1
-        CompositeRenderable:
-          Image:
-            image: images/left_part_down_container.png
-            destination:
-              x: 0
-              y: -200
-              w: 200
-              h: 200
+        CompositeRenderable: None
         CompositeTransform: {}
+        CompositeRenderLayer: 1
+        CompositeRenderDepth: 1
+        UiElement:
+          camera_name: camera_ui
+          element_type:
+            Image:
+              image:
+                Single: images/ui/down_ui.png
+              source_rect:
+                x: 0
+                y: 0
+                w: 1016
+                h: 418
+          margin:
+            left: 20
+            right: 20
+            top: 20
+            bottom: 20
+          horizontal_anchor:
+            Parent:
+              - PercentageLength: 0
+              - PercentageLength: 0
+          vertical_anchor:
+            Parent:
+              - PercentageLength: 0.75
+              - PercentageLength: 0
         NonPersistent: ~
   - Data:
       components:
         Tag: ui
-        CompositeRenderLayer: 1
-        CompositeCameraAlignment:
-          x: 0.5
-          y: 1
-        CompositeRenderable:
-          Image:
-            image: images/middle_part_down_container.png
-            destination:
-              x: 0
-              y: -200
-              w: 500
-              h: 200
+        CompositeRenderable: None
         CompositeTransform: {}
+        CompositeRenderLayer: 1
+        CompositeRenderDepth: 1
+        UiElement:
+          camera_name: camera_ui
+          element_type:
+            Image:
+              image:
+                Single: images/ui/up_ui_smaller.png
+              source_rect:
+                x: 0
+                y: 0
+                w: 1018
+                h: 118
+          margin:
+            left: 20
+            right: 20
+            top: 20
+            bottom: 20
+          horizontal_anchor:
+            Parent:
+              - PercentageLength: 0
+              - PercentageLength: 0
+          vertical_anchor:
+            Parent:
+              - PercentageLength: 0.68
+              - PercentageLength: 0.25
+          offset:
+            x: 0
+            y: 15
         NonPersistent: ~
   - Data:
       components:
         Tag: ui
-        CompositeRenderLayer: 1
-        CompositeCameraAlignment:
-          x: 1
-          y: 1
-        CompositeRenderable:
-          Image:
-            image: images/right_part_down_container.png
-            destination:
-              x: 0
-              y: -200
-              w: 200
-              h: 200
+        CompositeRenderable: None
         CompositeTransform: {}
+        CompositeRenderLayer: 1
+        CompositeRenderDepth: 0
+        UiElement:
+          camera_name: camera_ui
+          element_type:
+            Image:
+              image:
+                Single: images/ui/virus_container.png
+              source_rect:
+                x: 0
+                y: 0
+                w: 500
+                h: 500
+          horizontal_anchor:
+            Parent:
+              - PercentageLength: 1
+              - PercentageLength: 0
+          vertical_anchor:
+            Parent:
+              - PercentageLength: 0.75
+              - PercentageLength: 0.25
+          alignment:
+            x: 1
+            y: 1
+          offset:
+            x: 10
+            y: 0
+          fixed_width: 250
+          fixed_height: 250
         NonPersistent: ~
   - Data:
       components:
         Tag: ui
+        CompositeRenderable: None
+        CompositeTransform: {}
         CompositeRenderLayer: 1
-        CompositeCameraAlignment:
-          x: 1
-          y: 1
-        CompositeRenderable:
-          Image:
-            image: images/wirus.png
-            destination:
-              x: -50
-              y: -50
-              w: 100
-              h: 100
-        CompositeTransform:
-          translation:
+        CompositeRenderDepth: 100
+        UiElement:
+          camera_name: camera_ui
+          element_type:
+            Image:
+              image:
+                Single: images/wirus.png
+              source_rect:
+                x: 0
+                y: 0
+                w: 500
+                h: 500
+          horizontal_anchor:
+            Parent:
+              - PercentageLength: 1
+              - PercentageLength: 0
+          vertical_anchor:
+            Parent:
+              - PercentageLength: 0.75
+              - PercentageLength: 0.25
+          alignment:
+            x: 0.5
+            y: 0.5
+          offset:
             x: -75
-            y: -250
+            y: -115
+          fixed_width: 150
+          fixed_height: 150
         VirusTag: ~
         NonPersistent: ~
-  # - Data:
-  #     components:
-  #       CompositeRenderable:
-  #         Text:
-  #           font: Verdana
-  #           text: Use WSAD to move
-  #           color:
-  #             r: 255
-  #             g: 255
-  #             b: 255
-  #             a: 255
-  #           align: Center
-  #           size: 24
-  #       CompositeTransform:
-  #         translation:
-  #           x: 0
-  #           y: -100
-  #       CompositeRenderDepth: 1
-  #       NonPersistent: ~

@@ -19,7 +19,7 @@ pub struct Wave {
     pub current_start_letter: usize,
 
     pub current_level: usize,
-    pub combo: i32
+    pub combo: i32,
 }
 
 impl Wave {

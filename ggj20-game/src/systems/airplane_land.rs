@@ -73,7 +73,11 @@ impl<'s> System<'s> for AirplaneLandSystem {
 
                     // Update the city looks
                     if let Some(infection_display_entity) = infection_display_entity {
-                        let (mut renderable, mut visibility) = <(CompositeRenderable, CompositeVisibility)>::fetch(world, infection_display_entity);
+                        let (mut renderable, mut visibility) =
+                            <(CompositeRenderable, CompositeVisibility)>::fetch(
+                                world,
+                                infection_display_entity,
+                            );
 
                         visibility.0 = true;
 
@@ -84,7 +88,7 @@ impl<'s> System<'s> for AirplaneLandSystem {
                                 x: (index % 5) as f32 * 400.0,
                                 y: (index / 5) as f32 * 400.0,
                                 w: 400.0,
-                                h: 400.0
+                                h: 400.0,
                             });
                         }
                     }

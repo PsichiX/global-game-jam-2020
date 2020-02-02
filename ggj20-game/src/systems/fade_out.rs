@@ -1,10 +1,6 @@
 #![allow(clippy::type_complexity)]
 
-use crate::{
-    components::{
-        fade_out::FadeOut
-    }
-};
+use crate::components::fade_out::FadeOut;
 use oxygengine::prelude::*;
 
 #[derive(Debug, Default)]

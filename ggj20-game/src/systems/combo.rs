@@ -1,14 +1,8 @@
 #![allow(clippy::type_complexity)]
 
 use crate::{
-    components::{
-        ComboProgressTag, ComboLeftNumberTag, ComboRightNumberTag
-    },
-    resources::{
-        wave::Wave,
-        wave::COMBO_STEP,
-        wave::COMBO_MAX_STEPS
-    },
+    components::{ComboLeftNumberTag, ComboProgressTag, ComboRightNumberTag},
+    resources::{wave::Wave, wave::COMBO_MAX_STEPS, wave::COMBO_STEP},
 };
 use oxygengine::prelude::*;
 
@@ -21,10 +15,13 @@ impl<'s> System<'s> for ComboSystem {
         ReadStorage<'s, ComboProgressTag>,
         ReadStorage<'s, ComboLeftNumberTag>,
         ReadStorage<'s, ComboRightNumberTag>,
-        WriteStorage<'s, CompositeRenderable>
+        WriteStorage<'s, CompositeRenderable>,
     );
 
-    fn run(&mut self, (waves, combo_progresses, left_combos, right_combos, mut renderables): Self::SystemData) {
+    fn run(
+        &mut self,
+        (waves, combo_progresses, left_combos, right_combos, mut renderables): Self::SystemData,
+    ) {
         for (_combo_progress, renderable) in (&combo_progresses, &mut renderables).join() {
             if let Renderable::Image(img) = &mut renderable.0 {
                 let mut progress = (waves.combo % COMBO_STEP) as f32 / (COMBO_STEP - 1) as f32;
@@ -37,7 +34,7 @@ impl<'s> System<'s> for ComboSystem {
                     x: 0.0,
                     y: 0.0,
                     w: 2500.0 * progress,
-                    h: 500.0
+                    h: 500.0,
                 });
 
                 img.destination = Some(Rect {
@@ -66,8 +63,7 @@ impl<'s> System<'s> for ComboSystem {
                     });
 
                     img.image = "images/texts/max.png".into();
-                }
-                else {
+                } else {
                     img.destination = Some(Rect {
                         x: 225.0,
                         y: 0.0,
@@ -75,11 +71,10 @@ impl<'s> System<'s> for ComboSystem {
                         h: 150.0,
                     });
 
-                    img.image = format!("images/texts/{}.png", waves.get_combo_multiplier() + 1).into();
+                    img.image =
+                        format!("images/texts/{}.png", waves.get_combo_multiplier() + 1).into();
                 }
             }
         }
-
-
     }
 }

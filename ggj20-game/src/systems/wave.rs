@@ -2,10 +2,7 @@
 
 use crate::{
     components::{airplane::Airplane, city::City, infection_rate::InfectionRate, letter::Letter},
-    resources::{
-        wave::Wave,
-        beat::Beat
-    },
+    resources::{beat::Beat, wave::Wave},
     utils::tween::*,
 };
 use oxygengine::prelude::*;
@@ -25,7 +22,7 @@ impl<'s> System<'s> for WaveSystem {
         Write<'s, PrefabManager>,
         ReadStorage<'s, City>,
         ReadStorage<'s, CompositeTransform>,
-        Read<'s, Beat>
+        Read<'s, Beat>,
     );
 
     fn run(

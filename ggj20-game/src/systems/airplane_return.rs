@@ -1,23 +1,17 @@
 #![allow(clippy::type_complexity)]
 
 use crate::components::{
-    airplane::Airplane,
-    letter::Letter,
-    infection_rate::InfectionRate,
-    fade_out::FadeOut,
-    ComboMissTag
+    airplane::Airplane, fade_out::FadeOut, infection_rate::InfectionRate, letter::Letter,
+    ComboMissTag,
 };
-use crate::resources::{
-    wave::Wave,
-    beat::Beat
-};
+use crate::resources::{beat::Beat, wave::Wave};
 
 use oxygengine::prelude::*;
 
 #[derive(Debug, Default)]
 pub struct AirplaneReturnSystem {
     beat_key_pressed: bool,
-    combo_decreased: bool
+    combo_decreased: bool,
 }
 
 impl<'s> System<'s> for AirplaneReturnSystem {
@@ -35,7 +29,17 @@ impl<'s> System<'s> for AirplaneReturnSystem {
 
     fn run(
         &mut self,
-        (mut waves, input, mut airplanes, mut letters, infection_rates, mut fade_outs, miss_tags, lazy_update, beat): Self::SystemData,
+        (
+            mut waves,
+            input,
+            mut airplanes,
+            mut letters,
+            infection_rates,
+            mut fade_outs,
+            miss_tags,
+            lazy_update,
+            beat,
+        ): Self::SystemData,
     ) {
         if beat.is_sync_with_beat(0.1) && !self.beat_key_pressed {
             self.combo_decreased = false;
@@ -51,9 +55,10 @@ impl<'s> System<'s> for AirplaneReturnSystem {
 
                 self.beat_key_pressed = true;
 
-                for (airplane, letter, infection_rate) in (&mut airplanes, &mut letters, &infection_rates)
-                    .join()
-                    .filter(|(airplane, _, _)| !airplane.returning)
+                for (airplane, letter, infection_rate) in
+                    (&mut airplanes, &mut letters, &infection_rates)
+                        .join()
+                        .filter(|(airplane, _, _)| !airplane.returning)
                 {
                     if letter.letter == c {
                         letter.letter = 0;
@@ -74,8 +79,7 @@ impl<'s> System<'s> for AirplaneReturnSystem {
                             }
 
                             waves.combo = 0;
-                        }
-                        else {
+                        } else {
                             waves.increase_combo();
                         }
 

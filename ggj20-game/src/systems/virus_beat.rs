@@ -1,12 +1,8 @@
 #![allow(clippy::type_complexity)]
 
 use crate::{
-    components::{
-        VirusTag
-    },
-    resources::{
-        beat::Beat
-    },
+    components::{ui_element::UiElement, VirusTag},
+    resources::beat::Beat,
 };
 use oxygengine::prelude::*;
 
@@ -17,24 +13,17 @@ impl<'s> System<'s> for VirusBeatSystem {
     type SystemData = (
         Read<'s, Beat>,
         ReadStorage<'s, VirusTag>,
-        WriteStorage<'s, CompositeTransform>
+        WriteStorage<'s, UiElement>,
     );
 
-    fn run(&mut self, (beat, viruses, mut transforms): Self::SystemData) {
-
-        for (virus, transform) in (&viruses, &mut transforms).join() {
+    fn run(&mut self, (beat, viruses, mut ui_elements): Self::SystemData) {
+        for (virus, ui_element) in (&viruses, &mut ui_elements).join() {
             if beat.is_sync_with_beat(0.1) {
-                transform.set_scale(Vec2 {
-                    x: 1.5,
-                    y: 1.5
-                });
+                ui_element.scale = 1.5.into();
+            } else {
+                ui_element.scale = 1.0.into();
             }
-            else {
-                transform.set_scale(Vec2 {
-                    x: 1.0,
-                    y: 1.0
-                });
-            }
+            ui_element.rebuild();
         }
     }
 }

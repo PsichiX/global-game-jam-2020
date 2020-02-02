@@ -1,0 +1,9 @@
+png://images/ui/down_ui.png
+png://images/ui/up_ui.png
+png://images/ui/up_ui_smaller.png
+png://images/ui/combo_stripe.png
+png://images/ui/combo_stripe_filling.png
+png://images/ui/coin_icon.png
+png://images/ui/virus_container.png
+png://images/ui/progress_item_window.png
+png://images/ui/town_icon.png

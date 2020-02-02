@@ -3,10 +3,10 @@ use serde::{Deserialize, Serialize};
 
 pub mod airplane;
 pub mod city;
+pub mod fade_out;
 pub mod infection_rate;
 pub mod letter;
 pub mod ui_element;
-pub mod fade_out;
 
 #[derive(Debug, Default, Copy, Clone, Serialize, Deserialize)]
 pub struct MainCameraTag;
