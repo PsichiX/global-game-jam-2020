@@ -7,6 +7,7 @@ pub const COMBO_MAX_STEPS: i32 = 5;
 pub const COMBO_INCREASE: i32 = 10;
 pub const COMBO_DECREASE: i32 = 1;
 pub const MAX_COMBO: i32 = COMBO_STEP * COMBO_MAX_STEPS;
+pub const BEAT_THRESHOLD: f64 = 0.1;
 
 #[derive(Debug, Clone)]
 pub enum Difficulty {

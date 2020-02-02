@@ -4,7 +4,7 @@ use crate::components::{
     airplane::Airplane, fade_out::FadeOut, infection_rate::InfectionRate, letter::Letter,
     ComboMissTag,
 };
-use crate::resources::{beat::Beat, wave::Wave};
+use crate::resources::{beat::Beat, wave::Wave, wave::BEAT_THRESHOLD};
 
 use oxygengine::prelude::*;
 
@@ -41,7 +41,7 @@ impl<'s> System<'s> for AirplaneReturnSystem {
             beat,
         ): Self::SystemData,
     ) {
-        if beat.is_sync_with_beat(0.1) && !self.beat_key_pressed {
+        if beat.is_sync_with_beat(BEAT_THRESHOLD) && !self.beat_key_pressed {
             self.combo_decreased = false;
             let mut airplaines_letters_to_hide = vec![];
 
@@ -130,7 +130,7 @@ impl<'s> System<'s> for AirplaneReturnSystem {
             key_pressed = true;
         }
 
-        if !beat.is_sync_with_beat(0.1) && key_pressed {
+        if !beat.is_sync_with_beat(BEAT_THRESHOLD) && key_pressed {
             info!("miss the beat");
 
             for (miss_tag, fade_out) in (&miss_tags, &mut fade_outs).join() {
@@ -142,7 +142,7 @@ impl<'s> System<'s> for AirplaneReturnSystem {
             return;
         }
 
-        if !beat.is_sync_with_beat(0.1) && !self.combo_decreased {
+        if !beat.is_sync_with_beat(BEAT_THRESHOLD) && !self.combo_decreased {
             if !self.beat_key_pressed {
                 waves.decrease_combo();
             }

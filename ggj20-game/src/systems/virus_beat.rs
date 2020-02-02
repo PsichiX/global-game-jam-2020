@@ -2,7 +2,10 @@
 
 use crate::{
     components::{ui_element::*, VirusTag},
-    resources::beat::Beat,
+    resources::{
+        beat::Beat,
+        wave::BEAT_THRESHOLD
+    }
 };
 use oxygengine::prelude::*;
 
@@ -37,7 +40,7 @@ impl<'s> System<'s> for VirusBeatSystem {
 
             // self.anim -= ((lifecycle.delta_time_seconds() * 1000.0) as i32).max(0);
 
-            if beat.is_sync_with_beat(0.1) && !self.beat_done {
+            if beat.is_sync_with_beat(BEAT_THRESHOLD) && !self.beat_done {
                 // self.beat_done = true;
 
                 // if self.anim == 0 {
@@ -50,7 +53,7 @@ impl<'s> System<'s> for VirusBeatSystem {
                 ui_element.scale = 1.5.into();
             }
 
-            if !beat.is_sync_with_beat(0.1) {
+            if !beat.is_sync_with_beat(BEAT_THRESHOLD) {
                 // self.beat_done = false;
 
                 ui_element.scale = 1.0.into();
