@@ -7,6 +7,7 @@ entities:
         CompositeTransform: {}
         CompositeRenderLayer: 1
         CompositeRenderDepth: 50
+        CardTag: 0
         UiElement:
           camera_name: camera_ui
           element_type:

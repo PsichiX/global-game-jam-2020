@@ -1,6 +1,6 @@
 use crate::{
     assets::tiled_map_asset_protocol::TiledMapAsset,
-    components::{city::City, ui_element::*},
+    components::{city::City, ui_element::*, CardTag},
     resources::{beat::Beat, wave::Wave},
 };
 use oxygengine::prelude::*;
@@ -56,11 +56,17 @@ impl State for GameState {
                 let mut ui_element = ui_element_storage
                     .get_mut(entity)
                     .expect("Could not get card UI element");
-                ui_element.alignment.x = -(i - 1) as f32;
+                ui_element.alignment.x = -((i - 1) as f32);
                 if let UiElementType::Image(image) = &mut ui_element.element_type {
                     image.image = UiImagePath::Single(format!("images/progress/{}.png", i));
                 }
                 ui_element.rebuild();
+
+                world
+                    .write_storage::<CardTag>()
+                    .get_mut(entity)
+                    .expect("Could not get card tag")
+                    .0 = i;
             });
         }
 

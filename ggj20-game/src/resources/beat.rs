@@ -26,7 +26,9 @@ impl Beat {
     }
 
     pub fn progress(&self) -> f32 {
-        (self.current_time_seconds as f32 / self.duration as f32).max(0.0).min(1.0)
+        (self.current_time_seconds as f32 / self.duration as f32)
+            .max(0.0)
+            .min(1.0)
     }
 
     pub fn beat_duration(&self) -> f64 {

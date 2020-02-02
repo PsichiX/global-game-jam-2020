@@ -2,10 +2,7 @@
 
 use crate::{
     components::MainCameraTag,
-    resources::{
-        beat::Beat,
-        wave::Wave, wave::Difficulty
-    }
+    resources::{beat::Beat, wave::Difficulty, wave::Wave},
 };
 use oxygengine::prelude::*;
 

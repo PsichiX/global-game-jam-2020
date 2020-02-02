@@ -1,7 +1,7 @@
 #![allow(clippy::type_complexity)]
 
 use crate::{
-    components::{city::City, MainCameraTag, airplane::Airplane},
+    components::{airplane::Airplane, city::City, MainCameraTag},
     resources::wave::Wave,
 };
 use oxygengine::prelude::*;
@@ -22,12 +22,16 @@ impl<'s> System<'s> for ViewSystem {
         ReadStorage<'s, MainCameraTag>,
     );
 
-    fn run(&mut self, (entities, wave, cities, airplanes, mut transforms, main_cameras): Self::SystemData) {
+    fn run(
+        &mut self,
+        (entities, wave, cities, airplanes, mut transforms, main_cameras): Self::SystemData,
+    ) {
         self.entities = (&entities, &cities)
             .join()
             .filter_map(|(entity, city)| {
                 if let Some(levels_range) = city.levels_range {
-                    if wave.current_level as usize >= levels_range.0 && wave.current_level as usize <= levels_range.1
+                    if wave.current_level as usize >= levels_range.0
+                        && wave.current_level as usize <= levels_range.1
                     {
                         return Some(entity);
                     }
@@ -65,19 +69,19 @@ impl<'s> System<'s> for ViewSystem {
         };
 
         let factor = camera_scale.x / 600.0;
-        info!("factor: {}", factor);
+        // info!("factor: {}", factor);
 
         for (city, mut transform) in (&cities, &mut transforms).join() {
             transform.set_scale(Vec2 {
                 x: factor,
-                y: factor
+                y: factor,
             });
         }
 
         for (airplane, mut transform) in (&airplanes, &mut transforms).join() {
             transform.set_scale(Vec2 {
                 x: factor * 0.1,
-                y: factor * 0.1
+                y: factor * 0.1,
             });
         }
     }

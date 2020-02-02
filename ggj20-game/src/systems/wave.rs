@@ -11,7 +11,7 @@ use oxygengine::prelude::*;
 pub struct WaveSystem {
     music_time: f64,
     city: i32,
-    nth_beat: i32
+    nth_beat: i32,
 }
 
 impl<'s> System<'s> for WaveSystem {
@@ -65,7 +65,9 @@ impl<'s> System<'s> for WaveSystem {
             let cities = (&entities, &cities, &transforms, &infection_rates)
                 .join()
                 .filter(|(_, city, _, _)| match city.levels_range {
-                    Some(r) => waves.current_level as usize >= r.0 && waves.current_level as usize <= r.1,
+                    Some(r) => {
+                        waves.current_level as usize >= r.0 && waves.current_level as usize <= r.1
+                    }
                     None => false,
                 })
                 .collect::<Vec<_>>();
@@ -120,7 +122,7 @@ impl<'s> System<'s> for WaveSystem {
                 break;
             }
 
-            waves.current_start_letter =  (waves.current_start_letter + 1) % waves.available_letters;
+            waves.current_start_letter = (waves.current_start_letter + 1) % waves.available_letters;
 
             let letter_ascii = match letter_ascii {
                 Some(c) => c,

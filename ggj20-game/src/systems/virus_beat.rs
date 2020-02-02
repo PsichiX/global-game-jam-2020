@@ -2,10 +2,7 @@
 
 use crate::{
     components::{ui_element::*, VirusTag},
-    resources::{
-        beat::Beat,
-        wave::BEAT_THRESHOLD
-    }
+    resources::{beat::Beat, wave::BEAT_THRESHOLD},
 };
 use oxygengine::prelude::*;
 
@@ -14,7 +11,7 @@ pub struct VirusBeatSystem {
     // NOTE: don't put that here.
     beat: usize,
     anim: i32,
-    beat_done: bool
+    beat_done: bool,
 }
 
 impl<'s> System<'s> for VirusBeatSystem {

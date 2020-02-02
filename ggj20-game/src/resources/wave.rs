@@ -1,6 +1,8 @@
 use std::collections::HashMap;
 
-pub const LETTERS: &[u8] = &[b'e', b'a', b'r', b'i', b'o', b't', b'n', b's', b'l', b'c', b'w', b'g', b'k', b'z', b'b'];
+pub const LETTERS: &[u8] = &[
+    b'e', b'a', b'r', b'i', b'o', b't', b'n', b's', b'l', b'c', b'w', b'g', b'k', b'z', b'b',
+];
 
 pub const COMBO_STEP: i32 = 50;
 pub const COMBO_MAX_STEPS: i32 = 5;
@@ -13,7 +15,7 @@ pub const BEAT_THRESHOLD: f64 = 0.1;
 pub enum Difficulty {
     Easy,
     Medium,
-    Hard
+    Hard,
 }
 
 impl Default for Difficulty {
@@ -37,7 +39,7 @@ pub struct Wave {
     pub score: i32,
     pub difficulty: Difficulty,
     pub plane_spawning_every_beats: i32,
-    pub airplane_speed: f32
+    pub airplane_speed: f32,
 }
 
 impl Wave {
@@ -54,7 +56,7 @@ impl Wave {
             score: 0,
             difficulty: Difficulty::Hard,
             plane_spawning_every_beats: 1,
-            airplane_speed: 0.15
+            airplane_speed: 0.15,
         };
 
         for c in b'a'..=b'z' {

@@ -147,10 +147,358 @@ entities:
                   image: images/texts/miss.png
                   destination:
                     x: -75
-                    y: -300
+                    y: -500
                     w: 150
                     h: 150
         CompositeTransform: {}
+        NonPersistent: ~
+  - Data:
+      components:
+        Tag: ui
+        CompositeRenderLayer: 1
+        CompositeRenderable:
+          Image:
+            image: images/man/chin_base.png
+        CompositeTransform:
+          scale:
+            x: 0.2
+            y: 0.2
+        NonPersistent: ~
+  - Data:
+      components:
+        Tag: ui
+        ManTag: 1
+        CompositeVisibility: false
+        CompositeRenderLayer: 1
+        CompositeRenderable:
+          Image:
+            image: images/man/1.png
+        CompositeTransform:
+          scale:
+            x: 0.2
+            y: 0.2
+        NonPersistent: ~
+  - Data:
+      components:
+        Tag: ui
+        ManTag: 2
+        CompositeVisibility: false
+        CompositeRenderLayer: 1
+        CompositeRenderable:
+          Image:
+            image: images/man/2.png
+        CompositeTransform:
+          scale:
+            x: 0.2
+            y: 0.2
+        NonPersistent: ~
+  - Data:
+      components:
+        Tag: ui
+        ManTag: 3
+        CompositeVisibility: false
+        CompositeRenderLayer: 1
+        CompositeRenderable:
+          Image:
+            image: images/man/3.png
+        CompositeTransform:
+          scale:
+            x: 0.2
+            y: 0.2
+        NonPersistent: ~
+  - Data:
+      components:
+        Tag: ui
+        ManTag: 4
+        CompositeVisibility: false
+        CompositeRenderLayer: 1
+        CompositeRenderable:
+          Image:
+            image: images/man/4.png
+        CompositeTransform:
+          scale:
+            x: 0.2
+            y: 0.2
+        NonPersistent: ~
+  - Data:
+      components:
+        Tag: ui
+        ManTag: 5
+        CompositeVisibility: false
+        CompositeRenderLayer: 1
+        CompositeRenderable:
+          Image:
+            image: images/man/5.png
+        CompositeTransform:
+          scale:
+            x: 0.2
+            y: 0.2
+        NonPersistent: ~
+  - Data:
+      components:
+        Tag: ui
+        ManTag: 6
+        CompositeVisibility: false
+        CompositeRenderLayer: 1
+        CompositeRenderable:
+          Image:
+            image: images/man/6.png
+        CompositeTransform:
+          scale:
+            x: 0.2
+            y: 0.2
+        NonPersistent: ~
+  - Data:
+      components:
+        Tag: ui
+        ManTag: 7
+        CompositeVisibility: false
+        CompositeRenderLayer: 1
+        CompositeRenderable:
+          Image:
+            image: images/man/7.png
+        CompositeTransform:
+          scale:
+            x: 0.2
+            y: 0.2
+        NonPersistent: ~
+  - Data:
+      components:
+        Tag: ui
+        ManTag: 8
+        CompositeVisibility: false
+        CompositeRenderLayer: 1
+        CompositeRenderable:
+          Image:
+            image: images/man/8.png
+        CompositeTransform:
+          scale:
+            x: 0.2
+            y: 0.2
+        NonPersistent: ~
+  - Data:
+      components:
+        Tag: ui
+        ManTag: 9
+        CompositeVisibility: false
+        CompositeRenderLayer: 1
+        CompositeRenderable:
+          Image:
+            image: images/man/9.png
+        CompositeTransform:
+          scale:
+            x: 0.2
+            y: 0.2
+        NonPersistent: ~
+  - Data:
+      components:
+        Tag: ui
+        ManTag: 10
+        CompositeVisibility: false
+        CompositeRenderLayer: 1
+        CompositeRenderable:
+          Image:
+            image: images/man/10.png
+        CompositeTransform:
+          scale:
+            x: 0.2
+            y: 0.2
+        NonPersistent: ~
+  - Data:
+      components:
+        Tag: ui
+        ManTag: 11
+        CompositeVisibility: false
+        CompositeRenderLayer: 1
+        CompositeRenderable:
+          Image:
+            image: images/man/11.png
+        CompositeTransform:
+          scale:
+            x: 0.2
+            y: 0.2
+        NonPersistent: ~
+  - Data:
+      components:
+        Tag: ui
+        ManTag: 12
+        CompositeVisibility: false
+        CompositeRenderLayer: 1
+        CompositeRenderable:
+          Image:
+            image: images/man/12.png
+        CompositeTransform:
+          scale:
+            x: 0.2
+            y: 0.2
+        NonPersistent: ~
+  - Data:
+      components:
+        Tag: ui
+        ManTag: 3
+        CompositeVisibility: false
+        CompositeRenderLayer: 1
+        CompositeRenderable:
+          Image:
+            image: images/man/13.png
+        CompositeTransform:
+          scale:
+            x: 0.2
+            y: 0.2
+        NonPersistent: ~
+  - Data:
+      components:
+        Tag: ui
+        ManTag: 14
+        CompositeVisibility: false
+        CompositeRenderLayer: 1
+        CompositeRenderable:
+          Image:
+            image: images/man/14.png
+        CompositeTransform:
+          scale:
+            x: 0.2
+            y: 0.2
+        NonPersistent: ~
+  - Data:
+      components:
+        Tag: ui
+        ManTag: 15
+        CompositeVisibility: false
+        CompositeRenderLayer: 1
+        CompositeRenderable:
+          Image:
+            image: images/man/15.png
+        CompositeTransform:
+          scale:
+            x: 0.2
+            y: 0.2
+        NonPersistent: ~
+  - Data:
+      components:
+        Tag: ui
+        ManTag: 16
+        CompositeVisibility: false
+        CompositeRenderLayer: 1
+        CompositeRenderable:
+          Image:
+            image: images/man/16.png
+        CompositeTransform:
+          scale:
+            x: 0.2
+            y: 0.2
+        NonPersistent: ~
+  - Data:
+      components:
+        Tag: ui
+        ManTag: 17
+        CompositeVisibility: false
+        CompositeRenderLayer: 1
+        CompositeRenderable:
+          Image:
+            image: images/man/17.png
+        CompositeTransform:
+          scale:
+            x: 0.2
+            y: 0.2
+        NonPersistent: ~
+  - Data:
+      components:
+        Tag: ui
+        ManTag: 18
+        CompositeVisibility: false
+        CompositeRenderLayer: 1
+        CompositeRenderable:
+          Image:
+            image: images/man/18.png
+        CompositeTransform:
+          scale:
+            x: 0.2
+            y: 0.2
+        NonPersistent: ~
+  - Data:
+      components:
+        Tag: ui
+        ManTag: 19
+        CompositeVisibility: false
+        CompositeRenderLayer: 1
+        CompositeRenderable:
+          Image:
+            image: images/man/19.png
+        CompositeTransform:
+          scale:
+            x: 0.2
+            y: 0.2
+        NonPersistent: ~
+  - Data:
+      components:
+        Tag: ui
+        ManTag: 20
+        CompositeVisibility: false
+        CompositeRenderLayer: 1
+        CompositeRenderable:
+          Image:
+            image: images/man/20.png
+        CompositeTransform:
+          scale:
+            x: 0.2
+            y: 0.2
+        NonPersistent: ~
+  - Data:
+      components:
+        Tag: ui
+        ManTag: 21
+        CompositeVisibility: false
+        CompositeRenderLayer: 1
+        CompositeRenderable:
+          Image:
+            image: images/man/21.png
+        CompositeTransform:
+          scale:
+            x: 0.2
+            y: 0.2
+        NonPersistent: ~
+  - Data:
+      components:
+        Tag: ui
+        ManTag: 22
+        CompositeVisibility: false
+        CompositeRenderLayer: 1
+        CompositeRenderable:
+          Image:
+            image: images/man/22.png
+        CompositeTransform:
+          scale:
+            x: 0.2
+            y: 0.2
+        NonPersistent: ~
+  - Data:
+      components:
+        Tag: ui
+        ManTag: 23
+        CompositeVisibility: false
+        CompositeRenderLayer: 1
+        CompositeRenderable:
+          Image:
+            image: images/man/23.png
+        CompositeTransform:
+          scale:
+            x: 0.2
+            y: 0.2
+        NonPersistent: ~
+  - Data:
+      components:
+        Tag: ui
+        ManTag: 24
+        CompositeVisibility: false
+        CompositeRenderLayer: 1
+        CompositeRenderable:
+          Image:
+            image: images/man/24.png
+        CompositeTransform:
+          scale:
+            x: 0.2
+            y: 0.2
         NonPersistent: ~
   - Data:
       components:

@@ -6,7 +6,8 @@ use crate::{
     components::{
         airplane::Airplane, city::City, fade_out::FadeOut, infection_rate::InfectionRate,
         letter::Letter, ui_element::UiElement, CardTag, ComboLeftNumberTag, ComboMissTag,
-        ComboProgressTag, ComboRightNumberTag, MainCameraTag, MenuTrackSelectedTag, VirusTag,
+        ComboProgressTag, ComboRightNumberTag, MainCameraTag, ManTag, MenuTrackSelectedTag,
+        VirusTag,
     },
     resources::wave::Wave,
     states::loading::LoadingState,
@@ -78,6 +79,7 @@ pub fn main_js() -> Result<(), JsValue> {
             prefabs.register_component_factory::<ComboMissTag>("ComboMissTag");
             prefabs.register_component_factory::<FadeOut>("FadeOut");
             prefabs.register_component_factory::<CardTag>("CardTag");
+            prefabs.register_component_factory::<ManTag>("ManTag");
         })
         // install input managment.
         .with_bundle(oxygengine::input::bundle_installer, |input| {

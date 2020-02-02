@@ -30,3 +30,4 @@ set://images/letters/assets.txt
 set://images/texts/assets.txt
 set://images/ui/assets.txt
 set://images/progress/assets.txt
+set://images/man/assets.txt

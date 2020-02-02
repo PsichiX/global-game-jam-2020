@@ -80,7 +80,7 @@ impl Prefab for ComboMissTag {}
 impl PrefabComponent for ComboMissTag {}
 
 #[derive(Debug, Default, Copy, Clone, Serialize, Deserialize)]
-pub struct CardTag;
+pub struct CardTag(pub usize);
 
 impl Component for CardTag {
     type Storage = VecStorage<Self>;
@@ -88,3 +88,13 @@ impl Component for CardTag {
 
 impl Prefab for CardTag {}
 impl PrefabComponent for CardTag {}
+
+#[derive(Debug, Default, Copy, Clone, Serialize, Deserialize)]
+pub struct ManTag(pub usize);
+
+impl Component for ManTag {
+    type Storage = VecStorage<Self>;
+}
+
+impl Prefab for ManTag {}
+impl PrefabComponent for ManTag {}
